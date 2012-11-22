@@ -25,12 +25,14 @@ public class MainActivity extends Activity {
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayShowTitleEnabled(false);
 		
+		// Create Shows tab
 		Tab tab = actionBar
 				.newTab()
 				.setText("Shows")
 				.setTabListener(new MyTabListener<ShowsFragment>(this, "shows", ShowsFragment.class));
 		actionBar.addTab(tab);
 		
+		// Create Live Stream tab
 		tab = actionBar
 				.newTab()
 				.setText("Live Stream")
@@ -45,27 +47,22 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	private Handler handler = new Handler() {
+	// Handle messages returned from AudioStreamService startService
+	private Handler playHandler = new Handler() {
 		public void handleMessage(Message message) {
-			/*
-			Object path = message.obj;
-			if (message.arg1 == RESULT_OK && path != null ) {
-				Toast.makeText(MainActivity.this, "Downloaded: " + path.toString(), Toast.LENGTH_LONG).show();
+			if (message.arg1 == RESULT_OK ) {
+				Toast.makeText(MainActivity.this, "Audio Started", Toast.LENGTH_LONG).show();
 			} else {
-				Toast.makeText(MainActivity.this, "Download Failed.", Toast.LENGTH_LONG).show();
+				Toast.makeText(MainActivity.this, "Audio Start Failed.", Toast.LENGTH_LONG).show();
 			}
-			*/
-			Toast.makeText(MainActivity.this, "Message Recieved", Toast.LENGTH_LONG).show();
 		}
 	};
 	
-	
-	public void onClick(View view) {
+	public void onPlayClick(View view) {
 		Intent intent = new Intent (this, AudioStreamService.class);
 		//Create a new Messenger for the communication back
-		Messenger messenger = new Messenger(handler);
+		Messenger messenger = new Messenger(playHandler);
 		intent.putExtra("MESSENGER", messenger);
-		//intent.setData(Uri.parse("http://courses.ucsd.edu/default.aspx"));
 		intent.putExtra("audioUrl", "http://stream1.fralnet.com:8000");
 		startService(intent);
 	}
