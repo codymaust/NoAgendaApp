@@ -25,8 +25,8 @@ public class LiveStreamFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_livestream, container, false);
-		TextView textView = (TextView) view.findViewById(R.id.liveStreamText);
-		textView.setText("Live Stream");
+		//TextView textView = (TextView) view.findViewById(R.id.liveStreamText);
+		//textView.setText("Live Stream");
 		return view;
 	}
 }

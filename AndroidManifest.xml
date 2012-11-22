@@ -23,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name="us.k117.noagendaapp.AudioStreamService"></service>
     </application>
 
 </manifest>

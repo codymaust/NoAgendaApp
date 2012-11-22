@@ -3,15 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/liveStreamText"
+   
+    <Button
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_marginTop="20dip"
-        android:text="Default Text"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30dip" />
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="@string/play_button" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onStopClick"
+        android:text="@string/stop_button" />
 
 </LinearLayout> 

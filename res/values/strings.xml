@@ -4,5 +4,7 @@
     <string name="app_name">No Agenda App</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="play_button">Play</string>
+    <string name="stop_button">Stop</string>
 
 </resources>
