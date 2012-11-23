@@ -3,6 +3,8 @@ package us.k117.noagendaapp;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -18,8 +20,10 @@ import android.util.Log;
 
 public class AudioStreamService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
 	//private static final String ACTION_PLAY = "com.example.action.PLAY";
+	private static final int NOTIFICATION_ID = 3333;
 	MediaPlayer mMediaPlayer = null;
 	WifiLock wifiLock  = null;
+	
     
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -98,6 +102,18 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     		} else {
     			Log.d(getClass().getName(), "MediaPlayer is already playing");
     		}
+    		
+    		// When streaming starts add a foreground Notification TODO: Replace with a method that has not been deprecated
+    		PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
+                    new Intent(getApplicationContext(), MainActivity.class),
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+    		Notification notification = new Notification();
+    		notification.tickerText = getString(R.string.app_name) + ": Now Streaming";
+    		notification.icon = R.drawable.ic_launcher;
+    		notification.flags |= Notification.FLAG_ONGOING_EVENT;
+    		notification.setLatestEventInfo(getApplicationContext(), getString(R.string.app_name), "Live Stream", pi);
+    		startForeground(NOTIFICATION_ID, notification);  		 		
+    		
     		
     		// Notify the startService call that the result was ok. TODO: Needs work.
     		Bundle extras = intent.getExtras();
