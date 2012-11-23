@@ -39,7 +39,12 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
 		mMediaPlayer.release();
 		mMediaPlayer = null;
 		
-		wifiLock.release();
+		// Check if wifiLock is held and release it if so
+		if (wifiLock.isHeld())
+		{
+			wifiLock.release();
+			Log.d(getClass().getName(), "WIFI lock released");
+		}
 	}
 	
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -83,7 +88,8 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     			{
     				// need to wifiLock.release(); if you pause or stop the audio
         			wifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
-        			wifiLock.acquire();        			
+        			wifiLock.acquire();
+        			Log.d(getClass().getName(), "WIFI lock acquired");
     			}
     			
     			mMediaPlayer.setOnPreparedListener(this);
