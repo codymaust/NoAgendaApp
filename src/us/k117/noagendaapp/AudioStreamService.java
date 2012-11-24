@@ -9,6 +9,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.AudioManager;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiManager.WifiLock;
 import android.os.Bundle;
@@ -18,10 +19,12 @@ import android.os.Messenger;
 import android.os.PowerManager;
 import android.util.Log;
 
-public class AudioStreamService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
+public class AudioStreamService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, AudioManager.OnAudioFocusChangeListener {
 	//private static final String ACTION_PLAY = "com.example.action.PLAY";
 	private static final int NOTIFICATION_ID = 3333;
+	
 	MediaPlayer mMediaPlayer = null;
+	AudioManager mAudioManager = null;
 	WifiLock wifiLock  = null;
 	
     
@@ -54,6 +57,16 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     public int onStartCommand(Intent intent, int flags, int startId) {
     	Log.d(getClass().getName(), "Service onStartCommand");
     
+    	// Request audio focus from the AudioManager
+    	 mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+    	int result = mAudioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+    	
+    	// If AudioManager gives audio focus...
+    	if ( result == AudioManager.AUDIOFOCUS_GAIN )
+    	{
+    		Log.d(getClass().getName(), "Got audio focus");
+    	
+    	
         //if (intent.getAction().equals(ACTION_PLAY)) {
           
     		// Get the url (local or internet) from the start service intent
@@ -128,7 +141,10 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     			}
     		}
     	//}
-    		
+    	} else {
+    		Log.d(getClass().getName(), "Could not get audio focus");
+    	}
+    	
     	return START_STICKY;
     }
 
@@ -154,4 +170,45 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
 		Log.d(getClass().getName(), "MediaPlayer: onError");
 		return false;
 	}
+	
+	/* AudioManager.OnAudioFocusChangeListener */
+    public void onAudioFocusChange(int focusChange) {
+        switch (focusChange) {
+        case AudioManager.AUDIOFOCUS_GAIN:
+            // resume playback
+            if (mMediaPlayer == null) initMediaPlayer();
+            else if (!mMediaPlayer.isPlaying()) mMediaPlayer.start();
+            mMediaPlayer.setVolume(1.0f, 1.0f);
+            break;
+
+        case AudioManager.AUDIOFOCUS_LOSS:
+            // Lost focus for an unbounded amount of time: stop playback and release media player
+            if (mMediaPlayer.isPlaying()) mMediaPlayer.stop();
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+
+            // Check if wifiLock is held and release it if so
+    		if (wifiLock.isHeld())
+    		{
+    			wifiLock.release();
+    			Log.d(getClass().getName(), "WIFI lock released");
+    		}
+            break;
+
+        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+            // Lost focus for a short time, but we have to stop
+            // playback. We don't release the media player because playback
+            // is likely to resume
+            if (mMediaPlayer.isPlaying()) mMediaPlayer.pause();
+            break;
+
+        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+            // Lost focus for a short time, but it's ok to keep playing
+            // at an attenuated level
+            if (mMediaPlayer.isPlaying()) mMediaPlayer.setVolume(0.1f, 0.1f);
+            break;
+        }
+        
+        /* AudioManager.OnAudioFocusChangeListener */
+    }
 }
