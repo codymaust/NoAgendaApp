@@ -25,6 +25,11 @@
             </intent-filter>
         </activity>
         <service android:name="us.k117.noagendaapp.AudioStreamService"></service>
+        <receiver android:name=".AudioIntentReceiver">
+        	<intent-filter>
+      			<action android:name="android.media.AUDIO_BECOMING_NOISY" />
+   			</intent-filter>
+        </receiver>
     </application>
 
 </manifest>
