@@ -20,7 +20,7 @@ import android.os.PowerManager;
 import android.util.Log;
 
 public class AudioStreamService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, AudioManager.OnAudioFocusChangeListener {
-	//private static final String ACTION_PLAY = "com.example.action.PLAY";
+	//private static final String ACTION_PLAY = "us.k117.action.PLAY";
 	private static final int NOTIFICATION_ID = 3333;
 	
 	MediaPlayer mMediaPlayer = null;
@@ -231,7 +231,5 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
         	}
             break;
         }
-        
-        /* AudioManager.OnAudioFocusChangeListener */
     }
 }
