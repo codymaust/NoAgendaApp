@@ -1,4 +1,4 @@
-package us.k117.noagendaapp;
+package us.k117.noagendaapp.ui;
 
 import android.app.Activity;
 import android.app.Fragment;

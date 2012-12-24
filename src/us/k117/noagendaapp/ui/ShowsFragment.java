@@ -1,4 +1,4 @@
-package us.k117.noagendaapp;
+package us.k117.noagendaapp.ui;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +21,11 @@ import android.webkit.WebView;
 import android.util.Log;
 
 import us.k117.noagendaapp.R;
-import us.k117.noagendaapp.RSSFeedXmlParser.Entry;
+import us.k117.noagendaapp.R.id;
+import us.k117.noagendaapp.R.layout;
+import us.k117.noagendaapp.R.string;
+import us.k117.noagendaapp.rss.RSSFeedXmlParser;
+import us.k117.noagendaapp.rss.RSSFeedXmlParser.Entry;
 
 public class ShowsFragment extends Fragment {
 

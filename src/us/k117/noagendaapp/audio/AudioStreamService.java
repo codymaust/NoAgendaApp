@@ -1,6 +1,11 @@
-package us.k117.noagendaapp;
+package us.k117.noagendaapp.audio;
 
 import java.io.IOException;
+
+import us.k117.noagendaapp.MainActivity;
+import us.k117.noagendaapp.R;
+import us.k117.noagendaapp.R.drawable;
+import us.k117.noagendaapp.R.string;
 
 import android.app.Activity;
 import android.app.Notification;

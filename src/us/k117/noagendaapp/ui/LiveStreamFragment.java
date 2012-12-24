@@ -1,5 +1,7 @@
-package us.k117.noagendaapp;
+package us.k117.noagendaapp.ui;
 
+import us.k117.noagendaapp.R;
+import us.k117.noagendaapp.R.layout;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;

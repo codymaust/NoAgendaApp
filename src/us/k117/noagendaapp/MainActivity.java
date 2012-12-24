@@ -11,7 +11,10 @@ import android.widget.Toast;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.content.Intent;
-import us.k117.noagendaapp.MyTabListener;
+import us.k117.noagendaapp.audio.AudioStreamService;
+import us.k117.noagendaapp.ui.LiveStreamFragment;
+import us.k117.noagendaapp.ui.MyTabListener;
+import us.k117.noagendaapp.ui.ShowsFragment;
 
 public class MainActivity extends Activity {
 
