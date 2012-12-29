@@ -6,15 +6,18 @@ import android.os.Message;
 import android.os.Messenger;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.content.Intent;
+
 import us.k117.noagendaapp.audio.AudioStreamService;
 import us.k117.noagendaapp.ui.LiveStreamFragment;
 import us.k117.noagendaapp.ui.MyTabListener;
 import us.k117.noagendaapp.ui.ShowsFragment;
+import us.k117.noagendaapp.rss.DownloadRSSTask;
 
 public class MainActivity extends Activity {
 
@@ -50,6 +53,19 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
+	// Reaction to the menu selection
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.refresh:
+			DownloadRSSTask myDownloadRSSTask = new DownloadRSSTask(this);
+			myDownloadRSSTask.execute(getResources().getString(R.string.rss_feed));
+			
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
 	// Handle messages returned from AudioStreamService startService
 	private Handler playHandler = new Handler() {
 		public void handleMessage(Message message) {
@@ -66,7 +82,7 @@ public class MainActivity extends Activity {
 		//Create a new Messenger for the communication back
 		Messenger messenger = new Messenger(playHandler);
 		intent.putExtra("MESSENGER", messenger);
-		intent.putExtra("audioUrl", "http://stream1.fralnet.com:8000");
+		intent.putExtra("audioUrl", getResources().getString(R.string.live_stream));
 		startService(intent);
 	}
 
