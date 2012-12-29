@@ -15,5 +15,9 @@
     
     <string name="rss_feed">http://feed.nashownotes.com/rss.xml</string>
     <string name="live_stream">http://stream1.fralnet.com:8000</string>
-
+    
+    <string name="shows_context_play">Play</string>
+    <string name="shows_context_download">Download</string>
+    <string name="shows_context_delete">Delete</string>
+    
 </resources>
