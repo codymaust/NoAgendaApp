@@ -2,12 +2,18 @@
 <resources>
 
     <string name="app_name">No Agenda App</string>
-    <string name="hello_world">Hello world!</string>
+
     <string name="menu_settings">Settings</string>
+    
     <string name="play_button">Play</string>
     <string name="stop_button">Stop</string>
     
     <string name="connection_error">Unable to load content. Check your network connection.</string>
     <string name="xml_error">Error parsing XML.</string>
+    
+    <string name="no_shows">No Shows Found</string>
+    
+    <string name="rss_feed">http://feed.nashownotes.com/rss.xml</string>
+    <string name="live_stream">http://stream1.fralnet.com:8000</string>
 
 </resources>
