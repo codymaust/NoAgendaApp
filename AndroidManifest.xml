@@ -31,6 +31,10 @@
       			<action android:name="android.media.AUDIO_BECOMING_NOISY" />
    			</intent-filter>
         </receiver>
+        <provider
+      		android:name="us.k117.noagendaapp.db.ShowsContentProvider"
+      		android:authorities="us.k117.noagendaapp.db" >
+   		</provider>
     </application>
 
 </manifest>
