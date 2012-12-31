@@ -24,4 +24,6 @@
     <string name="episode_context_download">Download</string>
     <string name="episode_context_delete">Delete</string>
     
+    <string name="download_path">/Music/NoAgendaApp</string>
+    
 </resources>
