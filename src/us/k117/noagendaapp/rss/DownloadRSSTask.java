@@ -18,8 +18,8 @@ import us.k117.noagendaapp.MainActivity;
 import us.k117.noagendaapp.R;
 import us.k117.noagendaapp.rss.RSSFeedXmlParser;
 import us.k117.noagendaapp.rss.RSSFeedXmlParser.Entry;
-import us.k117.noagendaapp.db.ShowsTable;
-import us.k117.noagendaapp.db.ShowsContentProvider;
+import us.k117.noagendaapp.db.EpisodeTable;
+import us.k117.noagendaapp.db.EpisodeContentProvider;
 
 // Implementation of AsyncTask used to download RSS feed
 public class DownloadRSSTask extends AsyncTask<String, Void, String> {
@@ -37,7 +37,7 @@ public class DownloadRSSTask extends AsyncTask<String, Void, String> {
         	// doInBackground() runs on a background thread which, since it is not intended to loop, is not connected to a Looper.
         	myMainActivity.runOnUiThread(new Runnable() {
         	    public void run() {
-        	    	Toast.makeText(myMainActivity, "Updating Shows", Toast.LENGTH_SHORT).show();
+        	    	Toast.makeText(myMainActivity, myMainActivity.getResources().getString(R.string.episode_updating), Toast.LENGTH_SHORT).show();
         	    }
         	});
         	
@@ -53,16 +53,17 @@ public class DownloadRSSTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
     	Log.d(getClass().getName(), "onPostExecute:");
     	
+    	// TODO Fix result == "0" and add case for 1 episode added so it isnt plural  
     	if ( result == "0" ) {
-        	Toast.makeText(myMainActivity, "Shows Up-to-Date", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(myMainActivity, myMainActivity.getResources().getString(R.string.episode_up_to_date), Toast.LENGTH_SHORT).show();
     	} else {
-        	Toast.makeText(myMainActivity, result + " Shows Added", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(myMainActivity, result + " " + myMainActivity.getResources().getString(R.string.episode_added), Toast.LENGTH_SHORT).show();
     	}
     	
     	
     }
 
-    // Get the RSS feed from the network and update the database if new shows exist
+    // Get the RSS feed from the network and update the database if new episode exist
     private String LoadRSSFromNetwork(String urlString) throws XmlPullParserException, IOException {
     	
     	int count = 0;
@@ -97,20 +98,20 @@ public class DownloadRSSTask extends AsyncTask<String, Void, String> {
     		}
 
     		ContentValues values = new ContentValues();
-    		values.put(ShowsTable.COLUMN_TITLE, title);
-    		values.put(ShowsTable.COLUMN_SUBTITLE, subtitle);
-    		values.put(ShowsTable.COLUMN_LINK, link);
+    		values.put(EpisodeTable.COLUMN_TITLE, title);
+    		values.put(EpisodeTable.COLUMN_SUBTITLE, subtitle);
+    		values.put(EpisodeTable.COLUMN_LINK, link);
 
-    		// query the database for the show link
-    		String[] projection = { ShowsTable.COLUMN_LINK };
-    		Cursor myCursor = myMainActivity.getContentResolver().query(ShowsContentProvider.CONTENT_URI, projection, ShowsTable.COLUMN_LINK + " = ?", new String[] { link }, null);
+    		// query the database for the episode link
+    		String[] projection = { EpisodeTable.COLUMN_LINK };
+    		Cursor myCursor = myMainActivity.getContentResolver().query(EpisodeContentProvider.CONTENT_URI, projection, EpisodeTable.COLUMN_LINK + " = ?", new String[] { link }, null);
     			
-    		// if the cursor has data then the show is already in the database
+    		// if the cursor has data then the episode is already in the database
     		if (myCursor.moveToFirst()) { 
-   				Log.d(getClass().getName(), "SHOW ENTRY EXISTS");
+   				Log.d(getClass().getName(), "EPISODE ENTRY EXISTS");
    			} else {
-   				Log.d(getClass().getName(), "ADDING NEW SHOW ENTRY");
-   				myMainActivity.getContentResolver().insert(ShowsContentProvider.CONTENT_URI, values);
+   				Log.d(getClass().getName(), "ADDING NEW EPISODE ENTRY");
+   				myMainActivity.getContentResolver().insert(EpisodeContentProvider.CONTENT_URI, values);
    				count = count + 1;
    			}
     	}

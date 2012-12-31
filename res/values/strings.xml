@@ -11,13 +11,17 @@
     <string name="connection_error">Unable to load content. Check your network connection.</string>
     <string name="xml_error">Error parsing XML.</string>
     
-    <string name="no_shows">No Shows Found</string>
+    <string name="no_episode">No New Episodes Found</string>
     
     <string name="rss_feed">http://feed.nashownotes.com/rss.xml</string>
     <string name="live_stream">http://stream1.fralnet.com:8000</string>
     
-    <string name="shows_context_play">Play</string>
-    <string name="shows_context_download">Download</string>
-    <string name="shows_context_delete">Delete</string>
+    <string name="episode_updating">Updating Episodes</string>
+    <string name="episode_up_to_date">Episodes Up-To-Date</string>
+    <string name="episode_added">Episodes Added</string>
+    
+    <string name="episode_context_play">Play</string>
+    <string name="episode_context_download">Download</string>
+    <string name="episode_context_delete">Delete</string>
     
 </resources>

@@ -16,7 +16,7 @@ import android.content.Intent;
 import us.k117.noagendaapp.audio.AudioStreamService;
 import us.k117.noagendaapp.ui.LiveStreamFragment;
 import us.k117.noagendaapp.ui.MyTabListener;
-import us.k117.noagendaapp.ui.ShowsFragment;
+import us.k117.noagendaapp.ui.EpisodeFragment;
 import us.k117.noagendaapp.rss.DownloadRSSTask;
 
 public class MainActivity extends Activity {
@@ -29,13 +29,13 @@ public class MainActivity extends Activity {
 		// setup action bar for tabs
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(true);
 		
-		// Create Shows tab
+		// Create Episodes tab
 		Tab tab = actionBar
 				.newTab()
-				.setText("Shows")
-				.setTabListener(new MyTabListener<ShowsFragment>(this, "shows", ShowsFragment.class));
+				.setText("Episodes")
+				.setTabListener(new MyTabListener<EpisodeFragment>(this, "episode", EpisodeFragment.class));
 		actionBar.addTab(tab);
 		
 		// Create Live Stream tab
