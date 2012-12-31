@@ -27,6 +27,7 @@ import us.k117.noagendaapp.R;
 
 import us.k117.noagendaapp.db.EpisodeContentProvider;
 import us.k117.noagendaapp.db.EpisodeTable;
+import us.k117.noagendaapp.pojo.Episode;
 
 import android.app.DownloadManager;
 import android.app.DownloadManager.Request;
@@ -69,31 +70,16 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		
-		String downloadURI = null;
-		String destinationDirectory = Environment.getExternalStorageDirectory() + "/Music/NoAgendaApp";
-		String fileName = null;
-		
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
 		
-		String[] projection = { EpisodeTable.COLUMN_LINK };			
-		Cursor myCursor = getActivity().getContentResolver().query(EpisodeContentProvider.CONTENT_URI, projection, EpisodeTable.COLUMN_ID + " = ?", new String[] { Long.toString(info.id) }, null);
-
-		if (myCursor.moveToFirst()) {
-			downloadURI = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_LINK));
-			Log.d(getClass().getName(), downloadURI);
-		}
+		Episode myEpisode = new Episode(getActivity(), Long.toString(info.id));
 		
-		fileName = Uri.parse(downloadURI).getLastPathSegment();
-		
-		File myDestinationFile = new File(destinationDirectory + "/" + fileName);
-
-		if (myDestinationFile.exists()) {
+		if (myEpisode.FileExists()) {
 			menu.add(0, PLAY_ID, 0, R.string.episode_context_play);
 			menu.add(0, DELETE_ID, 1, R.string.episode_context_delete);		
 		} else {
 			menu.add(0, DOWNLOAD_ID, 0, R.string.episode_context_download);			
-		}
-		
+		}		
 	}
 	
 	@Override
@@ -106,40 +92,13 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 		case DOWNLOAD_ID:
 			Log.d(getClass().getName(), "DOWNLOAD_ID");
 			
-			String downloadURI = null;
-			String destinationDirectory = Environment.getExternalStorageDirectory() + "/Music/NoAgendaApp";
-			String fileName = null;
-			
 			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
-			String[] projection = { EpisodeTable.COLUMN_LINK };			
-			Cursor myCursor = getActivity().getContentResolver().query(EpisodeContentProvider.CONTENT_URI, projection, EpisodeTable.COLUMN_ID + " = ?", new String[] { Long.toString(info.id) }, null);
-			
-    		if (myCursor.moveToFirst()) {
-    			downloadURI = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_LINK));
-    			Log.d(getClass().getName(), downloadURI);
-   			}
-    		
-    		fileName = Uri.parse(downloadURI).getLastPathSegment();
-    		
-    		File myDestinationFile = new File(destinationDirectory + "/" + fileName);
- 
-    		if (!myDestinationFile.exists()) {
-    			
-    			File myDestinationDirectory = new File(destinationDirectory);
-    			if (!myDestinationDirectory.exists()) {
-    				myDestinationDirectory.mkdir();
-    			}
-    		
-	        	DownloadManager myDownloadManager = (DownloadManager) getActivity().getSystemService(getActivity().DOWNLOAD_SERVICE);
-	        	Request myRequest = new Request(Uri.parse(downloadURI));
-	        	myRequest.setDestinationUri(Uri.parse("file://" + destinationDirectory + "/" + fileName));
-	        	long enqueue = myDownloadManager.enqueue(myRequest);
-    		}
-    		else
-    		{
-    			Toast.makeText(getActivity(), "Show has already been downloaded", Toast.LENGTH_SHORT).show();
-    		}
+			Episode myEpisode = new Episode(getActivity(), Long.toString(info.id));
+
+			if ( ! myEpisode.FileExists() ) {
+				myEpisode.Download();
+			}				
 	        return true;
 		case DELETE_ID:
 			Log.d(getClass().getName(), "DELETE_ID");
