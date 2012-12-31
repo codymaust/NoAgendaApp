@@ -1,11 +1,16 @@
 package us.k117.noagendaapp.ui;
 
+
+import java.io.File;
+
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -15,11 +20,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import us.k117.noagendaapp.R;
 
 import us.k117.noagendaapp.db.ShowsContentProvider;
 import us.k117.noagendaapp.db.ShowsTable;
+
+import android.app.DownloadManager;
+import android.app.DownloadManager.Request;
+import android.app.DownloadManager.Query;
 
 public class ShowsFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -57,22 +68,81 @@ public class ShowsFragment extends ListFragment implements LoaderManager.LoaderC
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
+		
+		String downloadURI = null;
+		String destinationDirectory = Environment.getExternalStorageDirectory() + "/Music/NoAgendaApp";
+		String fileName = null;
+		
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+		
+		String[] projection = { ShowsTable.COLUMN_LINK };			
+		Cursor myCursor = getActivity().getContentResolver().query(ShowsContentProvider.CONTENT_URI, projection, ShowsTable.COLUMN_ID + " = ?", new String[] { Long.toString(info.id) }, null);
+
+		if (myCursor.moveToFirst()) {
+			downloadURI = myCursor.getString(myCursor.getColumnIndex(ShowsTable.COLUMN_LINK));
+			Log.d(getClass().getName(), downloadURI);
+		}
+		
+		fileName = Uri.parse(downloadURI).getLastPathSegment();
+		
+		File myDestinationFile = new File(destinationDirectory + "/" + fileName);
+
+		if (myDestinationFile.exists()) {
 			menu.add(0, PLAY_ID, 0, R.string.shows_context_play);
-			menu.add(0, DOWNLOAD_ID, 1, R.string.shows_context_download);
-			menu.add(0, DELETE_ID, 2, R.string.shows_context_delete);
+			menu.add(0, DELETE_ID, 1, R.string.shows_context_delete);		
+		} else {
+			menu.add(0, DOWNLOAD_ID, 0, R.string.shows_context_download);			
+		}
+		
 	}
 	
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+
 		switch (item.getItemId()) {
 		case PLAY_ID:
-			Log.d(getClass().getName(), "PLAY");
+			Log.d(getClass().getName(), "PLAY_ID");
 			return true;
 		case DOWNLOAD_ID:
-			Log.d(getClass().getName(), "DOWNLOAD");
-			return true;
+			Log.d(getClass().getName(), "DOWNLOAD_ID");
+			
+			String downloadURI = null;
+			String destinationDirectory = Environment.getExternalStorageDirectory() + "/Music/NoAgendaApp";
+			String fileName = null;
+			
+			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+
+			String[] projection = { ShowsTable.COLUMN_LINK };			
+			Cursor myCursor = getActivity().getContentResolver().query(ShowsContentProvider.CONTENT_URI, projection, ShowsTable.COLUMN_ID + " = ?", new String[] { Long.toString(info.id) }, null);
+			
+    		if (myCursor.moveToFirst()) {
+    			downloadURI = myCursor.getString(myCursor.getColumnIndex(ShowsTable.COLUMN_LINK));
+    			Log.d(getClass().getName(), downloadURI);
+   			}
+    		
+    		fileName = Uri.parse(downloadURI).getLastPathSegment();
+    		
+    		File myDestinationFile = new File(destinationDirectory + "/" + fileName);
+ 
+    		if (!myDestinationFile.exists()) {
+    			
+    			File myDestinationDirectory = new File(destinationDirectory);
+    			if (!myDestinationDirectory.exists()) {
+    				myDestinationDirectory.mkdir();
+    			}
+    		
+	        	DownloadManager myDownloadManager = (DownloadManager) getActivity().getSystemService(getActivity().DOWNLOAD_SERVICE);
+	        	Request myRequest = new Request(Uri.parse(downloadURI));
+	        	myRequest.setDestinationUri(Uri.parse("file://" + destinationDirectory + "/" + fileName));
+	        	long enqueue = myDownloadManager.enqueue(myRequest);
+    		}
+    		else
+    		{
+    			Toast.makeText(getActivity(), "Show has already been downloaded", Toast.LENGTH_SHORT).show();
+    		}
+	        return true;
 		case DELETE_ID:
-			Log.d(getClass().getName(), "DELETE");
+			Log.d(getClass().getName(), "DELETE_ID");
 			return true;
 		}
 		return super.onContextItemSelected(item);
