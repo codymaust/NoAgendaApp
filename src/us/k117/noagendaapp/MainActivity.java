@@ -14,6 +14,7 @@ import android.app.ActionBar.Tab;
 import android.content.Intent;
 
 import us.k117.noagendaapp.audio.AudioStreamService;
+import us.k117.noagendaapp.handler.AudioHandler;
 import us.k117.noagendaapp.ui.LiveStreamFragment;
 import us.k117.noagendaapp.ui.MyTabListener;
 import us.k117.noagendaapp.ui.EpisodeFragment;
@@ -65,22 +66,13 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	// Handle messages returned from AudioStreamService startService
-	private Handler playHandler = new Handler() {
-		public void handleMessage(Message message) {
-			if (message.arg1 == RESULT_OK ) {
-				Toast.makeText(MainActivity.this, "Audio Started", Toast.LENGTH_LONG).show();
-			} else {
-				Toast.makeText(MainActivity.this, "Audio Start Failed.", Toast.LENGTH_LONG).show();
-			}
-		}
-	};
-	
+		
 	public void onPlayClick(View view) {
 		Intent intent = new Intent (this, AudioStreamService.class);
+
 		//Create a new Messenger for the communication back
-		Messenger messenger = new Messenger(playHandler);
+		Messenger messenger = new Messenger(new AudioHandler(this));
+
 		intent.putExtra("MESSENGER", messenger);
 		intent.putExtra("audioUrl", getResources().getString(R.string.live_stream));
 		startService(intent);
