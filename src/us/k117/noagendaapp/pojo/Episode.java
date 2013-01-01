@@ -57,6 +57,17 @@ public class Episode {
 		}	
 	}
 	
+	public void Delete() {
+		
+		String directory = Environment.getExternalStorageDirectory() + myActivity.getResources().getString(R.string.download_path);
+		String filename = Uri.parse(link).getLastPathSegment();
+		
+		if ( FileExists() ) {
+			File myFile = new File(directory + "/" + filename);
+			myFile.delete();
+		}
+	}
+	
 	public boolean FileExists() {
 		String myFileName = Uri.parse(link).getLastPathSegment();
 		
