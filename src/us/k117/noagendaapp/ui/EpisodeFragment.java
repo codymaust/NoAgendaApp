@@ -84,7 +84,12 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 	
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+		
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
+		Episode myEpisode = new Episode(getActivity(), Long.toString(info.id));
+
+		
 		switch (item.getItemId()) {
 		case PLAY_ID:
 			Log.d(getClass().getName(), "PLAY_ID");
@@ -92,16 +97,19 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 		case DOWNLOAD_ID:
 			Log.d(getClass().getName(), "DOWNLOAD_ID");
 			
-			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-
-			Episode myEpisode = new Episode(getActivity(), Long.toString(info.id));
-
 			if ( ! myEpisode.FileExists() ) {
 				myEpisode.Download();
 			}				
 	        return true;
 		case DELETE_ID:
 			Log.d(getClass().getName(), "DELETE_ID");
+			
+			if ( myEpisode.FileExists() ) {
+				myEpisode.Delete();
+			}	
+			
+			Toast.makeText(getActivity(), R.string.episode_deleted, Toast.LENGTH_SHORT).show();
+			
 			return true;
 		}
 		return super.onContextItemSelected(item);
