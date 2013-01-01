@@ -1,5 +1,6 @@
 package us.k117.noagendaapp.ui;
 
+import us.k117.noagendaapp.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -39,7 +40,7 @@ public class MyTabListener<T extends Fragment> implements TabListener
 		{
 			// If not, instantiate and add it to the activity
 			mFragment = Fragment.instantiate(mActivity, mClass.getName());
-			ft.add(android.R.id.content, mFragment, mTag);
+			ft.add(R.id.content_layout, mFragment, mTag);
 		} else {
 			// If it exists, simply attach it in the order to show it
 	        //ft.setCustomAnimations(android.R.animator.fade_in, R.animator.test);
