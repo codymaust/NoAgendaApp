@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import us.k117.noagendaapp.MainActivity;
 import us.k117.noagendaapp.R;
-import us.k117.noagendaapp.R.drawable;
-import us.k117.noagendaapp.R.string;
 
 import android.app.Activity;
 import android.app.Notification;
@@ -22,6 +20,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.PowerManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class AudioStreamService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, AudioManager.OnAudioFocusChangeListener {
@@ -61,6 +60,9 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
 	
     public int onStartCommand(Intent intent, int flags, int startId) {
     	Log.d(getClass().getName(), "Service onStartCommand");
+    	
+    	String title = intent.getStringExtra("title");
+    	String subtitle = intent.getStringExtra("subtitle");
     
     	// Request audio focus from the AudioManager
     	 mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -122,15 +124,20 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     			Log.d(getClass().getName(), "MediaPlayer is already playing");
     		}
     		
-    		// When streaming starts add a foreground Notification TODO: Replace with a method that has not been deprecated
+    		// When streaming starts add a foreground Notification
     		PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
                     new Intent(getApplicationContext(), MainActivity.class),
                     PendingIntent.FLAG_UPDATE_CURRENT);
-    		Notification notification = new Notification();
-    		notification.tickerText = getString(R.string.app_name) + ": Now Streaming";
-    		notification.icon = R.drawable.ic_launcher;
-    		notification.flags |= Notification.FLAG_ONGOING_EVENT;
-    		notification.setLatestEventInfo(getApplicationContext(), getString(R.string.app_name), "Live Stream", pi);
+    		
+    		 Notification notification = new NotificationCompat.Builder(getApplicationContext())
+             .setContentTitle(title)
+             .setContentText(subtitle)
+             .setTicker(getString(R.string.app_name) + ": " + title)
+             .setSmallIcon(R.drawable.ic_launcher)
+             .setContentIntent(pi)
+             .setOngoing(true)
+             .build();
+    		
     		startForeground(NOTIFICATION_ID, notification);  		 		
     		
     		
