@@ -8,6 +8,7 @@ import us.k117.noagendaapp.db.EpisodeTable;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.DownloadManager.Request;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
@@ -50,7 +51,7 @@ public class Episode {
 				myDirectory.mkdir();
 			}
 			
-        	DownloadManager myDownloadManager = (DownloadManager) myActivity.getSystemService(myActivity.DOWNLOAD_SERVICE);
+        	DownloadManager myDownloadManager = (DownloadManager) myActivity.getSystemService(Context.DOWNLOAD_SERVICE);
         	Request myRequest = new Request(Uri.parse(link));
         	myRequest.setDestinationUri(Uri.parse("file://" + directory + "/" + filename));
         	long enqueue = myDownloadManager.enqueue(myRequest);
