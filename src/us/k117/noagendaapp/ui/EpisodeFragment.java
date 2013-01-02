@@ -95,6 +95,8 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 			Messenger messenger = new Messenger(new AudioHandler(getActivity()));
 			intent.putExtra("MESSENGER", messenger);
 			intent.putExtra("audioUrl", myEpisode.GetLocalPath());
+			intent.putExtra("title", myEpisode.title);
+			intent.putExtra("subtitle", myEpisode.subtitle);
 			getActivity().startService(intent);
 			
 			return true;

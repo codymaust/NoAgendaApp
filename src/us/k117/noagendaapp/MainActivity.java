@@ -72,6 +72,8 @@ public class MainActivity extends Activity {
 
 		intent.putExtra("MESSENGER", messenger);
 		intent.putExtra("audioUrl", getResources().getString(R.string.live_stream));
+		intent.putExtra("title", "Live Stream");
+		intent.putExtra("subtitle", "");
 		startService(intent);
 	}
 
