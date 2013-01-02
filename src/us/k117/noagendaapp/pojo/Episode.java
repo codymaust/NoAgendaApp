@@ -92,4 +92,16 @@ public class Episode {
 		}		
 	}
 	
+	public String GetLocalPath() {
+		
+		if (FileExists()) {
+			String directory = Environment.getExternalStorageDirectory() + myActivity.getResources().getString(R.string.download_path);
+			String filename = Uri.parse(link).getLastPathSegment();
+			
+        	return directory + "/" + filename;
+		} else {
+			return null;
+		}		
+	}
+	
 }
