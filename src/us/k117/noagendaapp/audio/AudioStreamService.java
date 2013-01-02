@@ -52,7 +52,7 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
 		mMediaPlayer = null;
 		
 		// Check if wifiLock is held and release it if so
-		if (wifiLock.isHeld())
+		if (wifiLock != null && wifiLock.isHeld())
 		{
 			wifiLock.release();
 			Log.d(getClass().getName(), "WIFI lock released");
@@ -76,6 +76,7 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
           
     		// Get the url (local or internet) from the start service intent
     		String audioUrl = intent.getStringExtra("audioUrl");
+    		Log.d(getClass().getName(), "Got Audio URL: " + audioUrl);
     	
     		// Initialize MediaPlayer
     		mMediaPlayer = new MediaPlayer();
