@@ -3,11 +3,9 @@ package us.k117.noagendaapp.ui;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Messenger;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -16,16 +14,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 import us.k117.noagendaapp.R;
 
-import us.k117.noagendaapp.audio.AudioStreamService;
 import us.k117.noagendaapp.db.EpisodeContentProvider;
 import us.k117.noagendaapp.db.EpisodeTable;
-import us.k117.noagendaapp.handler.AudioHandler;
 import us.k117.noagendaapp.pojo.Episode;
 
 public class EpisodeFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -59,6 +56,23 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 	}
 	
 	//
+	// Do something when an item is selected
+	//
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		
+		Episode myEpisode = new Episode(getActivity(), Long.toString(id));
+		
+		if (myEpisode.FileExists()) {
+			myEpisode.Play();
+		} else {
+			myEpisode.Download();
+		}
+	}
+
+	
+	//
 	// Required for Context Menu (onCreateContextMenu, onContextitemSeleted)
 	//
 	@Override
@@ -89,15 +103,7 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 		case PLAY_ID:
 			Log.d(getClass().getName(), "PLAY_ID");
 			
-			
-			Intent intent = new Intent (getActivity(), AudioStreamService.class);
-			//Create a new Messenger for the communication back
-			Messenger messenger = new Messenger(new AudioHandler(getActivity()));
-			intent.putExtra("MESSENGER", messenger);
-			intent.putExtra("audioUrl", myEpisode.GetLocalPath());
-			intent.putExtra("title", myEpisode.title);
-			intent.putExtra("subtitle", myEpisode.subtitle);
-			getActivity().startService(intent);
+			myEpisode.Play();
 			
 			return true;
 		case DOWNLOAD_ID:
