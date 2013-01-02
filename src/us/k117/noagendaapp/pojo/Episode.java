@@ -3,15 +3,19 @@ package us.k117.noagendaapp.pojo;
 import java.io.File;
 
 import us.k117.noagendaapp.R;
+import us.k117.noagendaapp.audio.AudioStreamService;
 import us.k117.noagendaapp.db.EpisodeContentProvider;
 import us.k117.noagendaapp.db.EpisodeTable;
+import us.k117.noagendaapp.handler.AudioHandler;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.DownloadManager.Request;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Messenger;
 import android.util.Log;
 
 public class Episode {
@@ -39,6 +43,18 @@ public class Episode {
 		}
 	}
 	
+	public void Play() {
+		
+		Intent intent = new Intent (myActivity, AudioStreamService.class);
+		//Create a new Messenger for the communication back
+		Messenger messenger = new Messenger(new AudioHandler(myActivity));
+		intent.putExtra("MESSENGER", messenger);
+		intent.putExtra("audioUrl", GetLocalPath());
+		intent.putExtra("title", title);
+		intent.putExtra("subtitle", subtitle);
+		myActivity.startService(intent);
+	}
+	
 	public void Download() {
 		
 		String directory = Environment.getExternalStorageDirectory() + myActivity.getResources().getString(R.string.download_path);
@@ -54,7 +70,7 @@ public class Episode {
         	DownloadManager myDownloadManager = (DownloadManager) myActivity.getSystemService(Context.DOWNLOAD_SERVICE);
         	Request myRequest = new Request(Uri.parse(link));
         	myRequest.setDestinationUri(Uri.parse("file://" + directory + "/" + filename));
-        	long enqueue = myDownloadManager.enqueue(myRequest);
+        	myDownloadManager.enqueue(myRequest);
 		}	
 	}
 	
