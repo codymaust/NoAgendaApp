@@ -1,14 +1,11 @@
 package us.k117.noagendaapp;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Messenger;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.content.Intent;
