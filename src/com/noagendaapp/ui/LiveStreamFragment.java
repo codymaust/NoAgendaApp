@@ -1,13 +1,12 @@
-package us.k117.noagendaapp.ui;
+package com.noagendaapp.ui;
 
-import us.k117.noagendaapp.R;
-import us.k117.noagendaapp.R.layout;
+import com.noagendaapp.R;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.app.Fragment;
 
 public class LiveStreamFragment extends Fragment {

@@ -1,12 +1,13 @@
-package us.k117.noagendaapp.pojo;
+package com.noagendaapp.pojo;
 
 import java.io.File;
 
-import us.k117.noagendaapp.R;
-import us.k117.noagendaapp.audio.AudioStreamService;
-import us.k117.noagendaapp.db.EpisodeContentProvider;
-import us.k117.noagendaapp.db.EpisodeTable;
-import us.k117.noagendaapp.handler.AudioHandler;
+import com.noagendaapp.audio.AudioStreamService;
+import com.noagendaapp.db.EpisodeContentProvider;
+import com.noagendaapp.db.EpisodeTable;
+import com.noagendaapp.handler.AudioHandler;
+import com.noagendaapp.R;
+
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.DownloadManager.Request;

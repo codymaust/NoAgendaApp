@@ -1,7 +1,10 @@
-package us.k117.noagendaapp.db;
+package com.noagendaapp.db;
 
 import java.util.Arrays;
 import java.util.HashSet;
+
+import com.noagendaapp.db.EpisodeDatabaseHelper;
+import com.noagendaapp.db.EpisodeTable;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -13,8 +16,6 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.util.Log;
 
-import us.k117.noagendaapp.db.EpisodeDatabaseHelper;
-import us.k117.noagendaapp.db.EpisodeTable;
 
 public class EpisodeContentProvider extends ContentProvider {
 	
@@ -25,7 +26,7 @@ public class EpisodeContentProvider extends ContentProvider {
 	private static final int EPISODE = 10;
 	private static final int EPISODE_ID = 20;
 
-	private static final String AUTHORITY = "us.k117.noagendaapp.db";
+	private static final String AUTHORITY = "com.noagendaapp.db";
 
 	private static final String BASE_PATH = "episode";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);

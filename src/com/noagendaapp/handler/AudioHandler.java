@@ -1,4 +1,4 @@
-package us.k117.noagendaapp.handler;
+package com.noagendaapp.handler;
 
 import android.app.Activity;
 import android.os.Handler;

@@ -1,4 +1,4 @@
-package us.k117.noagendaapp.rss;
+package com.noagendaapp.rss;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,18 +8,20 @@ import java.util.List;
 
 import org.xmlpull.v1.XmlPullParserException;
 
+import com.noagendaapp.MainActivity;
+import com.noagendaapp.db.EpisodeContentProvider;
+import com.noagendaapp.db.EpisodeTable;
+import com.noagendaapp.rss.RSSFeedXmlParser;
+import com.noagendaapp.rss.RSSFeedXmlParser.Entry;
+import com.noagendaapp.R;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import us.k117.noagendaapp.MainActivity;
-import us.k117.noagendaapp.R;
-import us.k117.noagendaapp.rss.RSSFeedXmlParser;
-import us.k117.noagendaapp.rss.RSSFeedXmlParser.Entry;
-import us.k117.noagendaapp.db.EpisodeTable;
-import us.k117.noagendaapp.db.EpisodeContentProvider;
+
 
 // Implementation of AsyncTask used to download RSS feed
 public class DownloadRSSTask extends AsyncTask<String, Void, String> {

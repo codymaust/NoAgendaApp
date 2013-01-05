@@ -1,4 +1,9 @@
-package us.k117.noagendaapp.ui;
+package com.noagendaapp.ui;
+
+import com.noagendaapp.db.EpisodeContentProvider;
+import com.noagendaapp.db.EpisodeTable;
+import com.noagendaapp.pojo.Episode;
+import com.noagendaapp.R;
 
 import android.app.ListFragment;
 import android.app.LoaderManager;
@@ -18,12 +23,6 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-
-import us.k117.noagendaapp.R;
-
-import us.k117.noagendaapp.db.EpisodeContentProvider;
-import us.k117.noagendaapp.db.EpisodeTable;
-import us.k117.noagendaapp.pojo.Episode;
 
 public class EpisodeFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 

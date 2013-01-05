@@ -1,9 +1,9 @@
-package us.k117.noagendaapp.audio;
+package com.noagendaapp.audio;
 
 import java.io.IOException;
 
-import us.k117.noagendaapp.MainActivity;
-import us.k117.noagendaapp.R;
+import com.noagendaapp.MainActivity;
+import com.noagendaapp.R;
 
 import android.app.Activity;
 import android.app.Notification;
@@ -24,7 +24,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class AudioStreamService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, AudioManager.OnAudioFocusChangeListener {
-	//private static final String ACTION_PLAY = "us.k117.action.PLAY";
+	//private static final String ACTION_PLAY = "com.noagendaapp.action.PLAY";
 	private static final int NOTIFICATION_ID = 3333;
 	
 	MediaPlayer mMediaPlayer = null;
@@ -65,7 +65,7 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     	String subtitle = intent.getStringExtra("subtitle");
     
     	// Request audio focus from the AudioManager
-    	 mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+    	mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     	int result = mAudioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
     	
     	// If AudioManager gives audio focus...

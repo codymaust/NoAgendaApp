@@ -1,4 +1,4 @@
-package us.k117.noagendaapp.db;
+package com.noagendaapp.db;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;

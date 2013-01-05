@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/player_fragment"
-        android:name="us.k117.noagendaapp.ui.PlayerFragment"
+        android:name="com.noagendaapp.ui.PlayerFragment"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"

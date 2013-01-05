@@ -1,6 +1,7 @@
-package us.k117.noagendaapp.ui;
+package com.noagendaapp.ui;
 
-import us.k117.noagendaapp.R;
+import com.noagendaapp.R;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;

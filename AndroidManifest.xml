@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="us.k117.noagendaapp"
+    package="com.noagendaapp"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme" >
         
         <activity
-            android:name="us.k117.noagendaapp.MainActivity"
+            android:name="com.noagendaapp.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,15 +26,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="us.k117.noagendaapp.audio.AudioStreamService"></service>
-        <receiver android:name="us.k117.noagendaapp.audio.AudioIntentReceiver">
+        <service android:name="com.noagendaapp.audio.AudioStreamService"></service>
+        <receiver android:name="com.noagendaapp.audio.AudioIntentReceiver">
         	<intent-filter>
       			<action android:name="android.media.AUDIO_BECOMING_NOISY" />
    			</intent-filter>
         </receiver>
         <provider
-      		android:name="us.k117.noagendaapp.db.EpisodeContentProvider"
-      		android:authorities="us.k117.noagendaapp.db" >
+      		android:name="com.noagendaapp.db.EpisodeContentProvider"
+      		android:authorities="com.noagendaapp.db" >
    		</provider>
     </application>
 

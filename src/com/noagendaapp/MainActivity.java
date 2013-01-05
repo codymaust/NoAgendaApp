@@ -1,4 +1,11 @@
-package us.k117.noagendaapp;
+package com.noagendaapp;
+
+import com.noagendaapp.audio.AudioStreamService;
+import com.noagendaapp.handler.AudioHandler;
+import com.noagendaapp.rss.DownloadRSSTask;
+import com.noagendaapp.ui.EpisodeFragment;
+import com.noagendaapp.ui.LiveStreamFragment;
+import com.noagendaapp.ui.MyTabListener;
 
 import android.os.Bundle;
 import android.os.Messenger;
@@ -9,13 +16,6 @@ import android.view.View;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.content.Intent;
-
-import us.k117.noagendaapp.audio.AudioStreamService;
-import us.k117.noagendaapp.handler.AudioHandler;
-import us.k117.noagendaapp.ui.LiveStreamFragment;
-import us.k117.noagendaapp.ui.MyTabListener;
-import us.k117.noagendaapp.ui.EpisodeFragment;
-import us.k117.noagendaapp.rss.DownloadRSSTask;
 
 public class MainActivity extends Activity {
 

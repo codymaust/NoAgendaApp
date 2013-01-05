@@ -1,5 +1,5 @@
 
-package us.k117.noagendaapp.rss;
+package com.noagendaapp.rss;
 
 import android.util.Log;
 import android.util.Xml;
