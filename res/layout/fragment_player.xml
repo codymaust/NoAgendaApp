@@ -1,22 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" 
     android:background="#000">
-   
-    <Button
-        android:id="@+id/play_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onPlayClick"
-        android:text="@string/play_button" />
+    
+    <RelativeLayout
+        android:id="@+id/seekbar_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+       
+    	<TextView
+        	android:id="@+id/currentposition_textview"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:textColor="#eeeeee"
+        	android:text="@string/default_time" />
 
-    <Button
-        android:id="@+id/stop_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onStopClick"
-        android:text="@string/stop_button" />
+    	<SeekBar
+        	android:id="@+id/audio_seekbar"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+        	android:layout_marginRight="60dp"
+        	android:layout_marginLeft="60dp"
+        	android:paddingLeft="6dp"
+        	android:paddingRight="6dp" />
+    
+    	<TextView
+        	android:id="@+id/duration_textview"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+        	android:textColor="#eeeeee"
+        	android:text="@string/default_time" />
+    
+    </RelativeLayout>
+    
+    <LinearLayout
+       	android:id="@+id/controls_linearlayout"
+       	android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/seekbar_linearlayout">
+    	
+        <Button
+        	android:id="@+id/rewind_button"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:onClick="onPlayerClick"
+        	android:text="@string/rewind_button" />
+    
+    	<Button
+       		android:id="@+id/play_button"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:onClick="onPlayerClick"
+        	android:text="@string/play_button" />
 
-</LinearLayout> 
+    	<Button
+        	android:id="@+id/fastforward_button"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:onClick="onPlayerClick"
+        	android:text="@string/fastforward_button" />
+    	
+    	<Button
+        	android:id="@+id/live_button"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:onClick="onPlayerClick"
+        	android:text="@string/live_button" />
+	</LinearLayout>
+</RelativeLayout> 
