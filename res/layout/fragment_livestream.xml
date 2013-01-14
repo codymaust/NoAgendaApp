@@ -11,11 +11,4 @@
         android:onClick="onPlayClick"
         android:text="@string/play_button" />
 
-    <Button
-        android:id="@+id/liveStreamStop_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onStopClick"
-        android:text="@string/stop_button" />
-
 </LinearLayout> 
