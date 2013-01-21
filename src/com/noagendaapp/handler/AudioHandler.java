@@ -1,8 +1,17 @@
 package com.noagendaapp.handler;
 
+import java.util.concurrent.TimeUnit;
+
+import com.noagendaapp.audio.AudioStreamService;
+import com.noagendaapp.MainActivity;
+import com.noagendaapp.R;
+
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AudioHandler extends Handler {
@@ -15,11 +24,46 @@ public class AudioHandler extends Handler {
 
 	@Override
 	public void handleMessage(Message message) {
-		if (message.arg1 == Activity.RESULT_OK ) {
+		Log.d(getClass().getName(), "AudioHandler got a message:" + message.what);
+		
+        switch (message.what) {
+        case Activity.RESULT_OK:
+        	// TODO: Currently not used, need to decide if this should be fixed to work or removed completely. Maybe only work for the Live Stream?
 			Toast.makeText(myActivity, "Audio Started", Toast.LENGTH_LONG).show();
-		} else {
-			Toast.makeText(myActivity, "Audio Start Failed.", Toast.LENGTH_LONG).show();
-		}
-	}
-	
+            break;
+        case AudioStreamService.MSG_UPDATE_FRAGMENT_PLAYER:
+        	// Only update the player information if the SeekBar isn't being used
+        	if (MainActivity.updateSeekBar)
+        	{
+        		TextView currentPosition_TextView = (TextView) myActivity.findViewById(R.id.currentposition_textview);
+        		TextView duration_TextView = (TextView) myActivity.findViewById(R.id.duration_textview);
+        	
+        		int currentPosition = message.arg1;
+        		int duration = message.arg2;
+        		
+        		// Convert the currentPosition milliseconds to something that could formatted in a human readable display
+        		long cHours = TimeUnit.MILLISECONDS.toHours(currentPosition);
+        		long cMinutes = TimeUnit.MILLISECONDS.toMinutes(currentPosition) - TimeUnit.HOURS.toMinutes(cHours);
+        		long cSeconds = TimeUnit.MILLISECONDS.toSeconds(currentPosition) - TimeUnit.HOURS.toSeconds(cHours) - TimeUnit.MINUTES.toSeconds(cMinutes);
+        	
+        		// Convert the duration milliseconds to something that could formatted in a human readable display
+        		long dHours = TimeUnit.MILLISECONDS.toHours(duration);
+        		long dMinutes = TimeUnit.MILLISECONDS.toMinutes(duration) - TimeUnit.HOURS.toMinutes(dHours);
+        		long dSeconds = TimeUnit.MILLISECONDS.toSeconds(duration) - TimeUnit.HOURS.toSeconds(dHours) - TimeUnit.MINUTES.toSeconds(dMinutes);
+        	
+        		// Update the progress of the SeekBar based on the % of the current position away from the duration
+        		SeekBar progressBar = (SeekBar) myActivity.findViewById(R.id.audio_seekbar);
+            	progressBar.setProgress((currentPosition * 100) / duration);
+            	progressBar.setMax(100);
+        	
+            	// Update the currentPostion & duration text on the play in the hh:mm:ss format
+            	currentPosition_TextView.setText(String.format("%02d:%02d:%02d", cHours, cMinutes, cSeconds));
+        		duration_TextView.setText(String.format("%02d:%02d:%02d", dHours, dMinutes, dSeconds));
+        	} else {
+        		Log.d(getClass().getName(), "AudioHandler: SEEKING");
+        	}
+        default:
+            super.handleMessage(message);
+        }
+	}	
 }
