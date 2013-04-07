@@ -32,4 +32,6 @@
     
     <string name="download_path">/Music/NoAgendaApp</string>
     
+    <string name="acra_toast_text">NoAgendaApp crashed, but a report has been sent to the developer to help fix the issue!</string>
+    
 </resources>
