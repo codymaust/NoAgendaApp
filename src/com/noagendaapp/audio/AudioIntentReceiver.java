@@ -18,8 +18,12 @@ public class AudioIntentReceiver extends BroadcastReceiver {
 			Log.d(getClass().getName(), "Headphones Unplugged");
 	        // signal your service to stop playback TODO: Maybe change this to pause audio instead of stop the audio?
 			try {  	  
-				Message msg = Message.obtain(null, AudioStreamService.MSG_STOP_AUDIO, 0, 0);								
-				MainActivity.myService.send(msg);
+				Message msg = Message.obtain(null, AudioStreamService.MSG_STOP_AUDIO, 0, 0);	
+
+				// Make sure the service is running before sending a message to it.
+				if (MainActivity.myService != null) {
+					MainActivity.myService.send(msg);
+				}
 			} catch (RemoteException e) {
 				Log.w(getClass().getName(), "Exception sending message", e);
 			}

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.noagendaapp"
     android:versionCode="1"
-    android:versionName="2013.4.7" >
+    android:versionName="2013.4.14" >
 
     <uses-sdk
         android:minSdkVersion="14"
