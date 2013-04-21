@@ -11,6 +11,7 @@ public class EpisodeTable {
 	public static final String COLUMN_TITLE = "title";
 	public static final String COLUMN_SUBTITLE = "subtitle";
 	public static final String COLUMN_LINK = "link";
+	public static final String COLUMN_POSITION = "position";
 
 	// Database creation SQL statement
 	private static final String DATABASE_CREATE = "create table " + TABLE_EPISODE
@@ -18,7 +19,8 @@ public class EpisodeTable {
 		+ COLUMN_ID + " integer primary key autoincrement, " 
 		+ COLUMN_TITLE + " text not null, " 
 		+ COLUMN_SUBTITLE + " text not null," 
-		+ COLUMN_LINK + " text not null" 
+		+ COLUMN_LINK + " text not null,"
+		+ COLUMN_POSITION + "integer default 0"
 		+ ");";
 
 	public static void onCreate(SQLiteDatabase database) {
