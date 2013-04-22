@@ -20,7 +20,7 @@ public class EpisodeTable {
 		+ COLUMN_TITLE + " text not null, " 
 		+ COLUMN_SUBTITLE + " text not null," 
 		+ COLUMN_LINK + " text not null,"
-		+ COLUMN_POSITION + "integer default 0"
+		+ COLUMN_POSITION + " integer default 0"
 		+ ");";
 
 	public static void onCreate(SQLiteDatabase database) {
