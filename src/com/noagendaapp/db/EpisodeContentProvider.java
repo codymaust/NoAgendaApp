@@ -121,10 +121,24 @@ public class EpisodeContentProvider extends ContentProvider {
 	}
 
 	@Override
-	public int update(Uri uri, ContentValues values, String selection,
-			String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+		int uriType = sURIMatcher.match(uri);
+		SQLiteDatabase sqlDB = database.getWritableDatabase();
+		int rowsUpdated = 0;
+		
+		switch (uriType) {
+		case EPISODE:
+			break;
+		case EPISODE_ID:
+			String id = uri.getLastPathSegment();
+			rowsUpdated = sqlDB.update(EpisodeTable.TABLE_EPISODE, values, EpisodeTable.COLUMN_ID + "=" + id, null);
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown URI: " + uri);
+		}
+		
+		getContext().getContentResolver().notifyChange(uri, null);
+		return rowsUpdated;
 	}
 	
 	private void checkColumns(String[] projection) {
