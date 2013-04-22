@@ -3,6 +3,7 @@ package com.noagendaapp.ui;
 import com.noagendaapp.db.EpisodeContentProvider;
 import com.noagendaapp.db.EpisodeTable;
 import com.noagendaapp.pojo.Episode;
+import com.noagendaapp.MainActivity;
 import com.noagendaapp.R;
 
 import android.app.ListFragment;
@@ -65,6 +66,8 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 		
 		if (myEpisode.FileExists()) {
 			myEpisode.Play();
+			// Set the active episode 
+			MainActivity.activeEpisode = myEpisode;
 		} else {
 			myEpisode.Download();
 		}
@@ -103,6 +106,8 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 			Log.d(getClass().getName(), "PLAY_ID");
 			
 			myEpisode.Play();
+			// Set the active episode 
+			MainActivity.activeEpisode = myEpisode;
 			
 			return true;
 		case DOWNLOAD_ID:
