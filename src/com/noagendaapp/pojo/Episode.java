@@ -28,6 +28,7 @@ public class Episode {
 	public String title;
 	public String subtitle;
 	public String link;
+	public String position;
 	
 	public Episode(Activity activity, String myId) {
 		Log.d(getClass().getName(), "Creating Episode Object");
@@ -36,7 +37,7 @@ public class Episode {
 		id = myId;
 		
 		// Get the Episode details from the sqlite database
-		String[] projection = { EpisodeTable.COLUMN_TITLE, EpisodeTable.COLUMN_SUBTITLE, EpisodeTable.COLUMN_LINK };			
+		String[] projection = { EpisodeTable.COLUMN_TITLE, EpisodeTable.COLUMN_SUBTITLE, EpisodeTable.COLUMN_LINK, EpisodeTable.COLUMN_POSITION };			
 		Cursor myCursor = myActivity.getContentResolver().query(EpisodeContentProvider.CONTENT_URI, projection, EpisodeTable.COLUMN_ID + " = ?", new String[] { id }, null);
 
 		// Read the details from the sqlite database
@@ -44,6 +45,7 @@ public class Episode {
 			title = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_TITLE));
 			subtitle = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_SUBTITLE));
 			link = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_LINK));
+			position = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_POSITION));
 		}
 	}
 	
@@ -57,6 +59,7 @@ public class Episode {
 	    	  myBundle.putString("audioUrl", GetLocalPath());
 	    	  myBundle.putString("title", title);
 	    	  myBundle.putString("subtitle", subtitle);
+	    	  myBundle.putString("position", position);	    	  
 	    	  
 	    	  // Set the messsage to to tell the AudioStreamService to play the file
               Message msg = Message.obtain(null, AudioStreamService.MSG_PLAY_FILE, 0, 0);
