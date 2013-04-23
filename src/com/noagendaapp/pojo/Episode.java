@@ -53,22 +53,24 @@ public class Episode {
 	// Play the episode by sending the episode details to the AudioStreamService service
 	//
 	public void Play() {
-	      try {
-	    	  // Add the file and episode information to a bundle 
-	    	  Bundle myBundle = new Bundle();
-	    	  myBundle.putString("audioUrl", GetLocalPath());
-	    	  myBundle.putString("title", title);
-	    	  myBundle.putString("subtitle", subtitle);
-	    	  myBundle.putString("position", position);	    	  
+			// TODO: Need to reload the object from the database because the position could have changed 
+			// since the initial object load
+	      	try {
+	      		// Add the file and episode information to a bundle 
+	      		Bundle myBundle = new Bundle();
+	      		myBundle.putString("audioUrl", GetLocalPath());
+	      		myBundle.putString("title", title);
+	      		myBundle.putString("subtitle", subtitle);
+	      		myBundle.putString("position", position);	    	  
 	    	  
-	    	  // Set the messsage to to tell the AudioStreamService to play the file
-              Message msg = Message.obtain(null, AudioStreamService.MSG_PLAY_FILE, 0, 0);
-              msg.setData(myBundle);
+	      		// Set the messsage to to tell the AudioStreamService to play the file
+	      		Message msg = Message.obtain(null, AudioStreamService.MSG_PLAY_FILE, 0, 0);
+	      		msg.setData(myBundle);
               
-              // Send the message and the bundle to the AudioStreamService
-              MainActivity.myService.send(msg);
+	      		// Send the message and the bundle to the AudioStreamService
+	      		MainActivity.myService.send(msg);
           } catch (RemoteException e) {
-        	  Log.w(getClass().getName(), "Exception sending message", e);
+        	  	Log.w(getClass().getName(), "Exception sending message", e);
           }
 	}
 	
