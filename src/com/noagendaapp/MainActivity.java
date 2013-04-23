@@ -8,6 +8,7 @@ import java.util.Date;
 
 import com.noagendaapp.audio.AudioStreamService;
 import com.noagendaapp.handler.AudioHandler;
+import com.noagendaapp.pojo.Episode;
 import com.noagendaapp.rss.DownloadRSSTask;
 import com.noagendaapp.ui.EpisodeFragment;
 import com.noagendaapp.ui.LiveStreamFragment;
@@ -42,6 +43,9 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
     // Variable for accessing the Seekbar
     SeekBar mySeekBar;
     public static boolean updateSeekBar = true;
+    
+    // Variable for the active episode
+    public static Episode activeEpisode = null;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -179,12 +183,18 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 		Bundle myBundle = null;
 		
 		switch(view.getId()) {
-		case R.id.play_button:
-			// TODO: Need to impliment some sort or play/pause/stop
+		case R.id.play_button:		
+			// play/pause/stop
 			if ( AudioStreamService.isPlaying() ) {
+				// If audio is playing then tell the Service to stop
 				what = AudioStreamService.MSG_STOP_AUDIO;
 			} else {
-				Log.d(getClass().getName(), "Start Playing...");
+				// If the audio isn't playing then check if there is an active 
+				// episode and start playing it
+				if (activeEpisode != null)
+				{
+					activeEpisode.Play();
+				}
 			}
 			break;
 		case R.id.rewind_button:
@@ -206,7 +216,8 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 		    myBundle = new Bundle();
 		    myBundle.putString("audioUrl", getResources().getString(R.string.live_stream));
 		    myBundle.putString("title", "No Agenda Stream");
-		    myBundle.putString("subtitle", "Live Stream");		    	  
+		    myBundle.putString("subtitle", "Live Stream");
+		    myBundle.putString("position", "0");
 	        what = AudioStreamService.MSG_PLAY_FILE;	             	              
 	        break;
         default:
