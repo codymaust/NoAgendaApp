@@ -46,7 +46,12 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     public static final int MSG_PLAY_FILE = 12;
     public static final int MSG_SEEK_TO = 13;
     public static final int MSG_JUMP_TO = 14;
+    public static final int MSG_STOP_GUI = 98;
     public static final int MSG_UPDATE_FRAGMENT_PLAYER = 99;
+    
+    // Information about the audio from the database
+    private static int savedSeekPosition = 0;
+    private static boolean liveStream = false;
     
     
 	@Override
@@ -95,7 +100,18 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     public void onPrepared(MediaPlayer player) {
     	Log.d(getClass().getName(), "onPrepared: MediaPlayer is ready");
     	
-        player.start();               
+        player.start();  
+        
+		//
+		// Jump to the position saved in the database
+		//
+        if ( savedSeekPosition > 0 ) {
+        	// Make sure the savedSeekPosition is valid
+        	if (savedSeekPosition < myMediaPlayer.getDuration() && savedSeekPosition > 0) {
+        		// Seek to the savedSeekPosition
+        		myMediaPlayer.seekTo(savedSeekPosition);
+        	}
+		}
     }
 	
 	// AudioManager.OnAudioFocusChangeListener 
@@ -162,7 +178,7 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
             	StopAudio();
             	break;
             case MSG_PLAY_FILE:
-            	StartAudio(msg.getData().getString("audioUrl"), msg.getData().getString("title"), msg.getData().getString("subtitle"));
+            	StartAudio(msg.getData().getString("audioUrl"), msg.getData().getString("title"), msg.getData().getString("subtitle"), Integer.parseInt(msg.getData().getString("position")));
                 break;
             case MSG_SEEK_TO:
             	SeekTo(msg.arg1);
@@ -184,8 +200,8 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     	return isPlaying;
     }
                
-    private void StartAudio(String audioUrl, String title, String subtitle)
-    {  
+    private void StartAudio(String audioUrl, String title, String subtitle, int seekPosition)
+    {     			
     	// Request audio focus from the AudioManager
     	myAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     	int result = myAudioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
@@ -207,6 +223,9 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     			// Set a WIFI wake lock if playing streaming audio
     			if (audioUrl.contains("http"))
     			{
+    				// set the liveStream var to true
+    				liveStream = true;
+    				
     				// need to wifiLock.release(); if you pause or stop the audio
     				myWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
     				myWifiLock.acquire();
@@ -264,8 +283,13 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     		
     		startForeground(NOTIFICATION_ID, notification);  
     	
+    		// Do the following playing a saved file
     		if (audioUrl.contains("http") == false)
-    		{
+    		{   
+    			// Set the savedSeekPosition so the player can jumped to the lasted saved position
+    			savedSeekPosition = seekPosition;
+
+    			// Start the task to update the gui
     			myHandler.postDelayed(mUpdateTimeTask, 1000);
     		}
             isPlaying = true;
@@ -283,6 +307,15 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     		if (myMediaPlayer.isPlaying())
     		{
     			myMediaPlayer.stop();
+    			
+    			if ( liveStream == false) {  
+    				try {
+    					// Send the currentPostion to the client so the position can be saved
+    					myClient.send(Message.obtain(null, MSG_STOP_GUI, myMediaPlayer.getCurrentPosition(), 0));
+    				} catch (RemoteException e) {
+    					Log.w(getClass().getName(), "Exception sending message", e);
+    				}
+    			}
     		}
 		
     		// release the MediaPlayer
