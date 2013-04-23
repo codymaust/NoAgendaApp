@@ -11,6 +11,7 @@ import com.noagendaapp.R;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.DownloadManager.Request;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -54,7 +55,7 @@ public class Episode {
 	//
 	public void Play() {
 			// TODO: Need to reload the object from the database because the position could have changed 
-			// since the initial object load
+			// since the initial object load (Maybe? Need to test if this is a problem)
 	      	try {
 	      		// Add the file and episode information to a bundle 
 	      		Bundle myBundle = new Bundle();
@@ -158,4 +159,18 @@ public class Episode {
 			return null;
 		}		
 	}	
+	
+	public void SetPosition(int newPosition) {
+		position = Integer.toString(newPosition);
+		
+    	//
+    	// Save the current position into the database so the app can resume where it left off
+    	//
+		ContentValues values = new ContentValues();
+		values.put(com.noagendaapp.db.EpisodeTable.COLUMN_POSITION, position);
+		
+		// Update the database via the EpisodeContentProvider
+		myActivity.getContentResolver().update(Uri.parse(EpisodeContentProvider.CONTENT_URI.toString() + "/" + id), values, null, null);
+
+	}
 }

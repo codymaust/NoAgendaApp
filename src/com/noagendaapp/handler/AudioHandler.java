@@ -7,8 +7,6 @@ import com.noagendaapp.MainActivity;
 import com.noagendaapp.R;
 
 import android.app.Activity;
-import android.content.ContentValues;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -71,15 +69,9 @@ public class AudioHandler extends Handler {
         	
         	Log.d(getClass().getName(), "AudioHandler: Stoping");
         	
-        	// TODO: Need to move the saving of the current position into the Episode Object
-        	//
-        	// Save the current position into the database so the app can resume where it left off
-        	//
-			ContentValues values = new ContentValues();
-			values.put(com.noagendaapp.db.EpisodeTable.COLUMN_POSITION, currentPosition);
-			
-			// TODO: Need to look into simplifying the URI part like the TODO application 
-			myActivity.getContentResolver().update(Uri.parse(com.noagendaapp.db.EpisodeContentProvider.CONTENT_URI.toString() + "/" + MainActivity.activeEpisode.id), values, null, null);
+        	// Save the current position to the activeEpisode Object
+        	MainActivity.activeEpisode.SetPosition(currentPosition);
+
         	break;
         default:
             super.handleMessage(message);
