@@ -54,25 +54,83 @@ public class Episode {
 	// Play the episode by sending the episode details to the AudioStreamService service
 	//
 	public void Play() {
-			// TODO: Need to reload the object from the database because the position could have changed 
-			// since the initial object load (Maybe? Need to test if this is a problem)
-	      	try {
-	      		// Add the file and episode information to a bundle 
-	      		Bundle myBundle = new Bundle();
-	      		myBundle.putString("audioUrl", GetLocalPath());
-	      		myBundle.putString("title", title);
-	      		myBundle.putString("subtitle", subtitle);
-	      		myBundle.putString("position", position);	    	  
-	    	  
-	      		// Set the messsage to to tell the AudioStreamService to play the file
-	      		Message msg = Message.obtain(null, AudioStreamService.MSG_PLAY_FILE, 0, 0);
-	      		msg.setData(myBundle);
-              
-	      		// Send the message and the bundle to the AudioStreamService
-	      		MainActivity.myService.send(msg);
-          } catch (RemoteException e) {
-        	  	Log.w(getClass().getName(), "Exception sending message", e);
-          }
+		int what = 0;
+		int arg1 = 0;
+		int arg2 = 0;
+		Bundle myBundle = null;
+		
+		// TODO: Need to reload the object from the database because the position could have changed 
+		// since the initial object load (Maybe? Need to test if this is a problem)
+    	myBundle = new Bundle();
+    	myBundle.putString("audioUrl", GetLocalPath());
+    	myBundle.putString("title", title);
+    	myBundle.putString("subtitle", subtitle);
+      	myBundle.putString("position", position);	
+      	
+		what = AudioStreamService.MSG_PLAY_FILE;
+      	
+		SendToAudioStreamService(what, arg1, arg2, myBundle);
+	}
+	
+	//
+	// Stop the episode from playing by sending the stop command to the AudioStreamService service
+	//
+	public void Stop() {
+		int what = 0;
+		int arg1 = 0;
+		int arg2 = 0;
+		Bundle myBundle = null;
+		
+		what = AudioStreamService.MSG_STOP_AUDIO;
+		
+		SendToAudioStreamService(what, arg1, arg2, myBundle);
+	}
+	
+	//
+	// Fast Forward/Rewind the episode playing episode by sending the SeekTo command to the AudioStreamService service
+	//
+	public void SeekTo(int amount) {
+		int what = 0;
+		int arg1 = 0;
+		int arg2 = 0;
+		Bundle myBundle = null;
+		
+		what = AudioStreamService.MSG_SEEK_TO;
+		arg1 = amount;
+		
+		SendToAudioStreamService(what, arg1, arg2, myBundle);
+	}
+	
+	//
+	// Jump to a new position in the episode sending the JumpTo command to the AudioStreamService service
+	//
+	public void JumpTo(int position) {
+		int what = 0;
+		int arg1 = 0;
+		int arg2 = 0;
+		Bundle myBundle = null;
+		
+		what = AudioStreamService.MSG_JUMP_TO;
+		arg1 = position;
+		
+		SendToAudioStreamService(what, arg1, arg2, myBundle);
+	}
+	
+	//
+	// Try to send the command to the AudioStreamService service
+	//	
+	private void SendToAudioStreamService(int what, int arg1, int arg2, Bundle myBundle) {
+		try {  	  
+			Message msg = Message.obtain(null, what, arg1, arg2);
+			
+			if (myBundle != null) {
+				msg.setData(myBundle);
+			}
+			
+			MainActivity.myService.send(msg);
+		} catch (RemoteException e) {
+			Log.w(getClass().getName(), "Exception sending message", e);
+		}	
 	}
 	
 	//
@@ -160,6 +218,9 @@ public class Episode {
 		}		
 	}	
 	
+	//
+	// Update the position column in the database with the current position of the audio file
+	//
 	public void SetPosition(int newPosition) {
 		position = Integer.toString(newPosition);
 		

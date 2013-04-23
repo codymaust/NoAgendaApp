@@ -165,12 +165,9 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		updateSeekBar = true;
 		
-		// Tell the Service to jump to the location of the SeekBar
-		try {  	  
-			Message msg = Message.obtain(null, AudioStreamService.MSG_JUMP_TO, seekBar.getProgress(), 0);
-            myService.send(msg);
-		} catch (RemoteException e) {
-			Log.w(getClass().getName(), "Exception sending message", e);
+		// Tell the activeEpisode to jump to the location of the SeekBar
+		if ( AudioStreamService.isPlaying() ) {
+			activeEpisode.JumpTo(seekBar.getProgress());
 		}
 	}
 	
@@ -186,8 +183,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 		case R.id.play_button:		
 			// play/pause/stop
 			if ( AudioStreamService.isPlaying() ) {
-				// If audio is playing then tell the Service to stop
-				what = AudioStreamService.MSG_STOP_AUDIO;
+				activeEpisode.Stop();
 			} else {
 				// If the audio isn't playing then check if there is an active 
 				// episode and start playing it
@@ -198,17 +194,15 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 			}
 			break;
 		case R.id.rewind_button:
-			// Tell the Service to seek ahead 30 seconds
+			// Tell the activeEpisode to seek ahead 30 seconds
 			if ( AudioStreamService.isPlaying() ) {
-				what = AudioStreamService.MSG_SEEK_TO;
-				arg1 = -30000;
+				activeEpisode.SeekTo(-30000);
 			}
             break;
 		case R.id.fastforward_button:
-            // Tell the Service to seek back 30 seconds
+            // Tell the activeEpisode to seek back 30 seconds
 			if ( AudioStreamService.isPlaying() ) {
-				what = AudioStreamService.MSG_SEEK_TO;
-				arg1 = 30000;
+				activeEpisode.SeekTo(30000);
 			}
 			break;
 		case R.id.live_button:
