@@ -9,6 +9,7 @@ import java.util.Date;
 import com.noagendaapp.audio.AudioStreamService;
 import com.noagendaapp.handler.AudioHandler;
 import com.noagendaapp.pojo.Episode;
+import com.noagendaapp.pojo.LiveStream;
 import com.noagendaapp.rss.DownloadRSSTask;
 import com.noagendaapp.ui.EpisodeFragment;
 import com.noagendaapp.ui.LiveStreamFragment;
@@ -173,12 +174,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 	
 	// onClick from Player Controls in fragment_player.xml
 	public void onPlayerClick(View view) {
-		
-		int what = 0;
-		int arg1 = 0;
-		int arg2 = 0;
-		Bundle myBundle = null;
-		
+				
 		switch(view.getId()) {
 		case R.id.play_button:		
 			// play/pause/stop
@@ -206,31 +202,14 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 			}
 			break;
 		case R.id.live_button:
-            // Tell the Service to start the live stream
-		    myBundle = new Bundle();
-		    myBundle.putString("audioUrl", getResources().getString(R.string.live_stream));
-		    myBundle.putString("title", "No Agenda Stream");
-		    myBundle.putString("subtitle", "Live Stream");
-		    myBundle.putString("position", "0");
-	        what = AudioStreamService.MSG_PLAY_FILE;	             	              
+			// Create a new activeEpisode object for the Live Stream
+			Episode myEpisode = new LiveStream(this, "-1");
+			activeEpisode = myEpisode;
+			// Start the Live Stream
+			activeEpisode.Play();	             	              
 	        break;
         default:
         	break;
-		}
-		
-		//
-		// Try to send the command to the Service
-		//
-		try {  	  
-			Message msg = Message.obtain(null, what, arg1, arg2);
-			
-			if (myBundle != null) {
-				msg.setData(myBundle);
-			}
-			
-            myService.send(msg);
-		} catch (RemoteException e) {
-			Log.w(getClass().getName(), "Exception sending message", e);
 		}		
 	}
 	
