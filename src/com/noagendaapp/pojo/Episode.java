@@ -23,13 +23,14 @@ import android.util.Log;
 
 public class Episode {
 
-	private Activity myActivity;
+	protected Activity myActivity;
 	
 	public String id;
 	public String title;
 	public String subtitle;
 	public String link;
 	public String position;
+	public String audioUrl;
 	
 	public Episode(Activity activity, String myId) {
 		Log.d(getClass().getName(), "Creating Episode Object");
@@ -47,6 +48,7 @@ public class Episode {
 			subtitle = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_SUBTITLE));
 			link = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_LINK));
 			position = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_POSITION));
+			audioUrl = GetLocalPath();
 		}
 	}
 	
@@ -62,7 +64,7 @@ public class Episode {
 		// TODO: Need to reload the object from the database because the position could have changed 
 		// since the initial object load (Maybe? Need to test if this is a problem)
     	myBundle = new Bundle();
-    	myBundle.putString("audioUrl", GetLocalPath());
+    	myBundle.putString("audioUrl", audioUrl);
     	myBundle.putString("title", title);
     	myBundle.putString("subtitle", subtitle);
       	myBundle.putString("position", position);	
@@ -119,7 +121,7 @@ public class Episode {
 	//
 	// Try to send the command to the AudioStreamService service
 	//	
-	private void SendToAudioStreamService(int what, int arg1, int arg2, Bundle myBundle) {
+	protected void SendToAudioStreamService(int what, int arg1, int arg2, Bundle myBundle) {
 		try {  	  
 			Message msg = Message.obtain(null, what, arg1, arg2);
 			
