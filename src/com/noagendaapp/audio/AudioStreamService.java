@@ -50,9 +50,7 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     public static final int MSG_UPDATE_FRAGMENT_PLAYER = 99;
     
     // Information about the audio from the database
-    private static int savedSeekPosition = 0;
-    private static boolean liveStream = false;
-    
+    private static int savedSeekPosition = 0;    
     
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -223,9 +221,6 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     			// Set a WIFI wake lock if playing streaming audio
     			if (audioUrl.contains("http"))
     			{
-    				// set the liveStream var to true
-    				liveStream = true;
-    				
     				// need to wifiLock.release(); if you pause or stop the audio
     				myWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE)).createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
     				myWifiLock.acquire();
@@ -308,13 +303,11 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     		{
     			myMediaPlayer.stop();
     			
-    			if ( liveStream == false) {  
-    				try {
-    					// Send the currentPostion to the client so the position can be saved
-    					myClient.send(Message.obtain(null, MSG_STOP_GUI, myMediaPlayer.getCurrentPosition(), 0));
-    				} catch (RemoteException e) {
-    					Log.w(getClass().getName(), "Exception sending message", e);
-    				}
+    			try {
+    				// Send the currentPostion to the client so the position can be saved
+    				myClient.send(Message.obtain(null, MSG_STOP_GUI, myMediaPlayer.getCurrentPosition(), 0));
+    			} catch (RemoteException e) {
+    				Log.w(getClass().getName(), "Exception sending message", e);
     			}
     		}
 		
