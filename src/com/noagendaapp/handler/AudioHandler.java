@@ -24,7 +24,10 @@ public class AudioHandler extends Handler {
 
 	@Override
 	public void handleMessage(Message message) {
-		Log.d(getClass().getName(), "AudioHandler got a message:" + message.what);
+		// Suppress logging MSG_UPDATE_FRAGMENT_PLAYER messages
+		if ( message.what != 99 ) {
+			Log.d(getClass().getName(), "AudioHandler got a message:" + message.what);
+		}
 		
         switch (message.what) {
         case Activity.RESULT_OK:
