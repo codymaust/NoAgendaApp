@@ -41,24 +41,27 @@ public class AudioHandler extends Handler {
         		int currentPosition = message.arg1;
         		int duration = message.arg2;
         		
-        		// Convert the currentPosition milliseconds to something that could formatted in a human readable display
-        		long cHours = TimeUnit.MILLISECONDS.toHours(currentPosition);
-        		long cMinutes = TimeUnit.MILLISECONDS.toMinutes(currentPosition) - TimeUnit.HOURS.toMinutes(cHours);
-        		long cSeconds = TimeUnit.MILLISECONDS.toSeconds(currentPosition) - TimeUnit.HOURS.toSeconds(cHours) - TimeUnit.MINUTES.toSeconds(cMinutes);
+        		// Check the duration to prevent divide by 0 errors
+        		if ( duration > 0 ) {
+        			// Convert the currentPosition milliseconds to something that could formatted in a human readable display
+        			long cHours = TimeUnit.MILLISECONDS.toHours(currentPosition);
+        			long cMinutes = TimeUnit.MILLISECONDS.toMinutes(currentPosition) - TimeUnit.HOURS.toMinutes(cHours);
+        			long cSeconds = TimeUnit.MILLISECONDS.toSeconds(currentPosition) - TimeUnit.HOURS.toSeconds(cHours) - TimeUnit.MINUTES.toSeconds(cMinutes);
         	
-        		// Convert the duration milliseconds to something that could formatted in a human readable display
-        		long dHours = TimeUnit.MILLISECONDS.toHours(duration);
-        		long dMinutes = TimeUnit.MILLISECONDS.toMinutes(duration) - TimeUnit.HOURS.toMinutes(dHours);
-        		long dSeconds = TimeUnit.MILLISECONDS.toSeconds(duration) - TimeUnit.HOURS.toSeconds(dHours) - TimeUnit.MINUTES.toSeconds(dMinutes);
+        			// Convert the duration milliseconds to something that could formatted in a human readable display
+        			long dHours = TimeUnit.MILLISECONDS.toHours(duration);
+        			long dMinutes = TimeUnit.MILLISECONDS.toMinutes(duration) - TimeUnit.HOURS.toMinutes(dHours);
+        			long dSeconds = TimeUnit.MILLISECONDS.toSeconds(duration) - TimeUnit.HOURS.toSeconds(dHours) - TimeUnit.MINUTES.toSeconds(dMinutes);
         	
-        		// Update the progress of the SeekBar based on the % of the current position away from the duration
-        		SeekBar progressBar = (SeekBar) myActivity.findViewById(R.id.audio_seekbar);
-            	progressBar.setProgress((currentPosition * 100) / duration);
-            	progressBar.setMax(100);
+        			// Update the progress of the SeekBar based on the % of the current position away from the duration
+        			SeekBar progressBar = (SeekBar) myActivity.findViewById(R.id.audio_seekbar);
+            		progressBar.setProgress((currentPosition * 100) / duration);
+            		progressBar.setMax(100);
         	
-            	// Update the currentPostion & duration text on the play in the hh:mm:ss format
-            	currentPosition_TextView.setText(String.format("%02d:%02d:%02d", cHours, cMinutes, cSeconds));
-        		duration_TextView.setText(String.format("%02d:%02d:%02d", dHours, dMinutes, dSeconds));
+            		// Update the currentPostion & duration text on the play in the hh:mm:ss format
+            		currentPosition_TextView.setText(String.format("%02d:%02d:%02d", cHours, cMinutes, cSeconds));
+        			duration_TextView.setText(String.format("%02d:%02d:%02d", dHours, dMinutes, dSeconds));
+        		}
         	} else {
         		Log.d(getClass().getName(), "AudioHandler: SEEKING");
         	}
