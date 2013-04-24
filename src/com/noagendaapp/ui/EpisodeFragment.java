@@ -1,5 +1,6 @@
 package com.noagendaapp.ui;
 
+import com.noagendaapp.audio.AudioStreamService;
 import com.noagendaapp.db.EpisodeContentProvider;
 import com.noagendaapp.db.EpisodeTable;
 import com.noagendaapp.pojo.Episode;
@@ -65,9 +66,14 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 		Episode myEpisode = new Episode(getActivity(), Long.toString(id));
 		
 		if (myEpisode.FileExists()) {
-			myEpisode.Play();
-			// Set the active episode 
-			MainActivity.activeEpisode = myEpisode;
+			// TODO: If selecting the same episode then stop; if selecting a new episode save the old episode's position
+			// Only play the episode if the audio is stopped or the selected episode is different then the active episode
+			if ( ! AudioStreamService.isPlaying() || myEpisode.id != MainActivity.activeEpisode.id ) {
+				myEpisode.Play();
+				// Set the active episode 
+				MainActivity.activeEpisode = myEpisode;
+			}
+			
 		} else {
 			myEpisode.Download();
 		}
@@ -104,11 +110,13 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 		switch (item.getItemId()) {
 		case PLAY_ID:
 			Log.d(getClass().getName(), "PLAY_ID");
-			
-			myEpisode.Play();
-			// Set the active episode 
-			MainActivity.activeEpisode = myEpisode;
-			
+			// TODO: If selecting the same episode then stop; if selecting a new episode save the old episode's position
+			// Only play the episode if the audio is stopped or the selected episode is different then the active episode
+			if ( ! AudioStreamService.isPlaying() || myEpisode.id != MainActivity.activeEpisode.id ) {
+				myEpisode.Play();
+				// Set the active episode 
+				MainActivity.activeEpisode = myEpisode;
+			}
 			return true;
 		case DOWNLOAD_ID:
 			Log.d(getClass().getName(), "DOWNLOAD_ID");
