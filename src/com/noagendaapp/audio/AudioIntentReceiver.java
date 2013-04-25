@@ -15,7 +15,9 @@ public class AudioIntentReceiver extends BroadcastReceiver {
 		if (intent.getAction().equals(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
 			Log.d(getClass().getName(), "Headphones Unplugged");
 	        // signal your service to stop play back 
-			MainActivity.activeEpisode.Stop();
+			if ( MainActivity.activeEpisode != null ) {
+				MainActivity.activeEpisode.Stop();
+			}
 		}
 	}
 }
