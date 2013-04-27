@@ -64,6 +64,15 @@ public class AudioHandler extends Handler {
             		// Update the currentPostion & duration text on the play in the hh:mm:ss format
             		currentPosition_TextView.setText(String.format("%02d:%02d:%02d", cHours, cMinutes, cSeconds));
         			duration_TextView.setText(String.format("%02d:%02d:%02d", dHours, dMinutes, dSeconds));
+        			
+        			//
+        			// Every 20 seconds save the current position to the database in case something happens
+        			//
+        			if ( cSeconds == 0 || cSeconds == 20 || cSeconds == 40 ) {
+        				if ( MainActivity.activeEpisode != null ) {
+        					MainActivity.activeEpisode.SetPosition(currentPosition);
+        				}
+        			}
         		}
         	} else {
         		Log.d(getClass().getName(), "AudioHandler: SEEKING");
