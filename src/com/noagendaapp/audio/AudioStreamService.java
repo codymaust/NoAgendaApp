@@ -295,6 +295,8 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     }
     
     private void StopAudio() {
+		Log.d(getClass().getName(), "[StopAudio] Got the Stop Audio command");
+
     	// if the MediaPlayer has been initialize then release it
     	if ( myMediaPlayer != null ) {
     		
@@ -302,6 +304,7 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
     		if (myMediaPlayer.isPlaying())
     		{
     			myMediaPlayer.stop();
+    			Log.d(getClass().getName(), "[StopAudio] issued myMediaPlayer.stop");
     			
     			try {
     				// Send the currentPostion to the client so the position can be saved
@@ -383,6 +386,10 @@ public class AudioStreamService extends Service implements MediaPlayer.OnPrepare
         			
         		} else {
         			Log.d(getClass().getName(), "(mUpdateTimeTask) myMediaPlayer is not playing");
+        			
+        			// If myMediaPlayer isn't playing then we have most likely reached the end of the file and run
+        			// StopAudio to close any other running processes and clean up
+        			StopAudio();
         		}
     			
         		// Wait one second before running again
