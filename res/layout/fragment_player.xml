@@ -43,36 +43,48 @@
     
     <LinearLayout
        	android:id="@+id/controls_linearlayout"
+       	style="?android:attr/buttonBarStyle"
        	android:layout_width="match_parent"
         android:layout_height="50dp"
+	    android:layout_alignParentBottom="true"
+	    android:gravity="bottom|center"
+    	android:orientation="horizontal"
         android:layout_below="@+id/seekbar_linearlayout">
-    	
-        <Button
-        	android:id="@+id/rewind_button"
+    	    	
+        <ImageButton
+        	android:id="@+id/rewind_imagebutton"
+        	style="?android:attr/buttonBarButtonStyle"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:onClick="onPlayerClick"
-        	android:text="@string/rewind_button" />
+			android:src="@drawable/ic_rewind"
+        	android:contentDescription="@string/rewind_imagebutton" />
     
-    	<Button
-       		android:id="@+id/play_button"
+    	<ImageButton
+       		android:id="@+id/play_imagebutton"
+        	style="?android:attr/buttonBarButtonStyle"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:onClick="onPlayerClick"
-        	android:text="@string/play_button" />
+        	android:src="@drawable/ic_play"
+        	android:contentDescription="@string/play_imagebutton" />
 
-    	<Button
-        	android:id="@+id/fastforward_button"
+    	<ImageButton
+        	android:id="@+id/fastforward_imagebutton"
+			style="?android:attr/buttonBarButtonStyle"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:onClick="onPlayerClick"
-        	android:text="@string/fastforward_button" />
+        	android:src="@drawable/ic_fastforward"
+        	android:contentDescription="@string/fastforward_imagebutton" />
     	
     	<Button
         	android:id="@+id/live_button"
+        	style="?android:attr/buttonBarButtonStyle"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:onClick="onPlayerClick"
-        	android:text="@string/live_button" />
+        	android:text="@string/live_button" 
+        	android:textColor="@android:color/white" />
 	</LinearLayout>
 </RelativeLayout> 

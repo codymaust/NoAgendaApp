@@ -176,7 +176,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 	public void onPlayerClick(View view) {
 				
 		switch(view.getId()) {
-		case R.id.play_button:		
+		case R.id.play_imagebutton:		
 			// play/pause/stop
 			if ( AudioStreamService.isPlaying() ) {
 				activeEpisode.Stop();
@@ -189,13 +189,13 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 				}
 			}
 			break;
-		case R.id.rewind_button:
+		case R.id.rewind_imagebutton:
 			// Tell the activeEpisode to seek ahead 30 seconds
 			if ( AudioStreamService.isPlaying() ) {
 				activeEpisode.SeekTo(-30000);
 			}
             break;
-		case R.id.fastforward_button:
+		case R.id.fastforward_imagebutton:
             // Tell the activeEpisode to seek back 30 seconds
 			if ( AudioStreamService.isPlaying() ) {
 				activeEpisode.SeekTo(30000);

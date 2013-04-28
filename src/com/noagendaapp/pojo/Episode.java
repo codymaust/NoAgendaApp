@@ -20,6 +20,7 @@ import android.os.Environment;
 import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.ImageButton;
 
 public class Episode {
 
@@ -72,6 +73,11 @@ public class Episode {
 		what = AudioStreamService.MSG_PLAY_FILE;
       	
 		SendToAudioStreamService(what, arg1, arg2, myBundle);
+		
+		// Change the play button to the stop icon
+		ImageButton myImageButton = (ImageButton) myActivity.findViewById(R.id.play_imagebutton);
+		myImageButton.setImageResource(R.drawable.ic_stop);	
+		myImageButton.setContentDescription(myActivity.getResources().getString(R.string.stop_imagebutton));
 	}
 	
 	//
@@ -86,6 +92,11 @@ public class Episode {
 		what = AudioStreamService.MSG_STOP_AUDIO;
 		
 		SendToAudioStreamService(what, arg1, arg2, myBundle);
+		
+		// Change to play button to the play icon
+		ImageButton myImageButton = (ImageButton) myActivity.findViewById(R.id.play_imagebutton);
+		myImageButton.setImageResource(R.drawable.ic_play);	
+		myImageButton.setContentDescription(myActivity.getResources().getString(R.string.play_imagebutton));
 	}
 	
 	//

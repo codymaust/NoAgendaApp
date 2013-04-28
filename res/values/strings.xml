@@ -5,9 +5,10 @@
 
     <string name="menu_settings">Settings</string>
     
-    <string name="play_button">Play</string>
-    <string name="rewind_button">RW</string>
-    <string name="fastforward_button">FF</string>
+    <string name="play_imagebutton">Play</string>
+    <string name="stop_imagebutton">Stop</string>
+    <string name="rewind_imagebutton">Rewind</string>
+    <string name="fastforward_imagebutton">Fast Forward</string>
     <string name="live_button">Live</string>
     
     <string name="connection_error">Unable to load content. Check your network connection.</string>
