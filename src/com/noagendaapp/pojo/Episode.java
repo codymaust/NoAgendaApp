@@ -21,6 +21,8 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class Episode {
 
@@ -32,6 +34,7 @@ public class Episode {
 	public String link;
 	public String position;
 	public String audioUrl;
+	protected Boolean seekBarEnabled;
 	
 	public Episode(Activity activity, String myId) {
 		Log.d(getClass().getName(), "Creating Episode Object");
@@ -51,6 +54,9 @@ public class Episode {
 			position = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_POSITION));
 			audioUrl = GetLocalPath();
 		}
+		
+		// Set GUI options
+		seekBarEnabled = true;
 	}
 	
 	//
@@ -74,10 +80,26 @@ public class Episode {
       	
 		SendToAudioStreamService(what, arg1, arg2, myBundle);
 		
+		//
+		// Update the GUI
+		//
+		
 		// Change the play button to the stop icon
-		ImageButton myImageButton = (ImageButton) myActivity.findViewById(R.id.play_imagebutton);
-		myImageButton.setImageResource(R.drawable.ic_stop);	
-		myImageButton.setContentDescription(myActivity.getResources().getString(R.string.stop_imagebutton));
+		ImageButton play_ImageButton = (ImageButton) myActivity.findViewById(R.id.play_imagebutton);
+		play_ImageButton.setImageResource(R.drawable.ic_stop);	
+		play_ImageButton.setContentDescription(myActivity.getResources().getString(R.string.stop_imagebutton));
+		
+		// Update the currentPostion & duration text to 00:00:00
+		TextView currentPosition_TextView = (TextView) myActivity.findViewById(R.id.currentposition_textview);
+		TextView duration_TextView = (TextView) myActivity.findViewById(R.id.duration_textview);
+		currentPosition_TextView.setText(String.format("00:00:00"));
+		duration_TextView.setText(String.format("00:00:00"));
+
+		// Set the seekBar enabled for downloaded files and disabled for the live stream and set it to 0
+		SeekBar audio_SeekBar = (SeekBar) myActivity.findViewById(R.id.audio_seekbar);
+		audio_SeekBar.setEnabled(seekBarEnabled);
+		audio_SeekBar.setProgress(0);
+		audio_SeekBar.setMax(100);
 	}
 	
 	//
