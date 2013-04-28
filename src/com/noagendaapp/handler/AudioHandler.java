@@ -57,9 +57,9 @@ public class AudioHandler extends Handler {
         			long dSeconds = TimeUnit.MILLISECONDS.toSeconds(duration) - TimeUnit.HOURS.toSeconds(dHours) - TimeUnit.MINUTES.toSeconds(dMinutes);
         	
         			// Update the progress of the SeekBar based on the % of the current position away from the duration
-        			SeekBar progressBar = (SeekBar) myActivity.findViewById(R.id.audio_seekbar);
-            		progressBar.setProgress((currentPosition * 100) / duration);
-            		progressBar.setMax(100);
+        			SeekBar audio_SeekBar = (SeekBar) myActivity.findViewById(R.id.audio_seekbar);
+        			audio_SeekBar.setProgress((currentPosition * 100) / duration);
+        			audio_SeekBar.setMax(100);
         	
             		// Update the currentPostion & duration text on the play in the hh:mm:ss format
             		currentPosition_TextView.setText(String.format("%02d:%02d:%02d", cHours, cMinutes, cSeconds));

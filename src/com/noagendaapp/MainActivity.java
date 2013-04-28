@@ -42,7 +42,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
     boolean myServiceIsBound;
     
     // Variable for accessing the Seekbar
-    SeekBar mySeekBar;
+    SeekBar audio_SeekBar;
     public static boolean updateSeekBar = true;
     
     // Variable for the active episode
@@ -73,8 +73,8 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 		actionBar.addTab(tab);	
 		
 		// Initalize the Seekbar
-		mySeekBar = (SeekBar) findViewById(R.id.audio_seekbar);
-		mySeekBar.setOnSeekBarChangeListener(this);
+		audio_SeekBar = (SeekBar) findViewById(R.id.audio_seekbar);
+		audio_SeekBar.setOnSeekBarChangeListener(this);
 
 		// Bind to the Service as soon as the application is started
         doBindService();
@@ -206,7 +206,7 @@ public class MainActivity extends Activity implements SeekBar.OnSeekBarChangeLis
 			Episode myEpisode = new LiveStream(this, "-1");
 			activeEpisode = myEpisode;
 			// Start the Live Stream
-			activeEpisode.Play();	             	              
+			activeEpisode.Play();	
 	        break;
         default:
         	break;
