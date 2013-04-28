@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="horizontal">
 
-<!-- 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="4dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/accept" >
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/noagenda" >
     </ImageView>
- -->
+
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
+        android:layout_toRightOf="@+id/icon"
         android:lines="1"
         android:text="@+id/TextView01"
-        android:textSize="24sp" >
+        android:textSize="20sp" >
     </TextView>
     
     <TextView
@@ -30,9 +29,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
+        android:layout_below="@+id/title"
+        android:layout_toRightOf="@+id/icon"
         android:lines="1"
         android:text="@+id/TextView02"
         android:textSize="16sp">
     </TextView>
 
-</LinearLayout> 
+</RelativeLayout> 
