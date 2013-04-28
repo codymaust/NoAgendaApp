@@ -14,6 +14,9 @@ public class LiveStream extends Episode {
 		link = "";
 		position = "0";
 		audioUrl = myActivity.getResources().getString(R.string.live_stream_url);
+		
+		// Set GUI options
+		seekBarEnabled = false;
 	}
 	
 	// Override because the LiveStream cannot Seek
