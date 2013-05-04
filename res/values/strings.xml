@@ -5,6 +5,10 @@
 
     <string name="menu_settings">Settings</string>
     
+    <string name="episode_row_art">Episode Art</string>
+    <string name="episode_row_action_icon_play">Episode Downloaded</string>
+    <string name="episode_row_action_icon_download">Download Episode</string>
+    
     <string name="play_imagebutton">Play</string>
     <string name="stop_imagebutton">Stop</string>
     <string name="rewind_imagebutton">Rewind</string>
