@@ -38,10 +38,10 @@ public class EpisodeViewBinder implements ViewBinder {
     		File myFile = new File(Environment.getExternalStorageDirectory() + myActivity.getResources().getString(R.string.download_path) + "/" + myFileName);
 
 			if (myFile.exists()) {
-				action_icon.setImageResource(R.drawable.ic_play);	
+				action_icon.setImageResource(R.drawable.ic_action_playback_play_hl);	
 				action_icon.setContentDescription(myActivity.getResources().getString(R.string.episode_row_action_icon_play));
 			} else {
-				action_icon.setImageResource(R.drawable.ic_down);	
+				action_icon.setImageResource(R.drawable.ic_action_download_hl);	
 				action_icon.setContentDescription(myActivity.getResources().getString(R.string.episode_row_action_icon_download));	
 			}
 			

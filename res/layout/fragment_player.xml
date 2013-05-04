@@ -57,7 +57,7 @@
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:onClick="onPlayerClick"
-			android:src="@drawable/ic_rewind"
+			android:src="@drawable/ic_action_playback_rew_hd"
         	android:contentDescription="@string/rewind_imagebutton" />
     
     	<ImageButton
@@ -66,7 +66,7 @@
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:onClick="onPlayerClick"
-        	android:src="@drawable/ic_play"
+        	android:src="@drawable/ic_action_playback_play_hd"
         	android:contentDescription="@string/play_imagebutton" />
 
     	<ImageButton
@@ -75,7 +75,7 @@
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:onClick="onPlayerClick"
-        	android:src="@drawable/ic_fastforward"
+        	android:src="@drawable/ic_action_playback_forw_hd"
         	android:contentDescription="@string/fastforward_imagebutton" />
     	
     	<Button
