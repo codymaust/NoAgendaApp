@@ -142,7 +142,7 @@ public class EpisodeContentProvider extends ContentProvider {
 	}
 	
 	private void checkColumns(String[] projection) {
-		String[] available = { EpisodeTable.COLUMN_TITLE, EpisodeTable.COLUMN_SUBTITLE, EpisodeTable.COLUMN_LINK, EpisodeTable.COLUMN_POSITION,EpisodeTable.COLUMN_ID };
+		String[] available = { EpisodeTable.COLUMN_TITLE, EpisodeTable.COLUMN_SUBTITLE, EpisodeTable.COLUMN_LINK, EpisodeTable.COLUMN_POSITION, EpisodeTable.COLUMN_LENGTH, EpisodeTable.COLUMN_DATE, EpisodeTable.COLUMN_EPISODE_NUM, EpisodeTable.COLUMN_ID };
 		
 		if (projection != null) {
 			HashSet<String> requestedColumns = new HashSet<String>(Arrays.asList(projection));

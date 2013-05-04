@@ -12,15 +12,21 @@ public class EpisodeTable {
 	public static final String COLUMN_SUBTITLE = "subtitle";
 	public static final String COLUMN_LINK = "link";
 	public static final String COLUMN_POSITION = "position";
+	public static final String COLUMN_LENGTH = "length";
+	public static final String COLUMN_DATE = "date";
+	public static final String COLUMN_EPISODE_NUM = "episode_num";
 
 	// Database creation SQL statement
 	private static final String DATABASE_CREATE = "create table " + TABLE_EPISODE
 		+ "(" 
 		+ COLUMN_ID + " integer primary key autoincrement, " 
 		+ COLUMN_TITLE + " text not null, " 
-		+ COLUMN_SUBTITLE + " text not null," 
-		+ COLUMN_LINK + " text not null,"
-		+ COLUMN_POSITION + " integer default 0"
+		+ COLUMN_SUBTITLE + " text not null, " 
+		+ COLUMN_LINK + " text not null, "
+		+ COLUMN_POSITION + " integer default 0, "
+		+ COLUMN_LENGTH + " integer default 0, "
+		+ COLUMN_DATE + " text not null, "
+		+ COLUMN_EPISODE_NUM + " text not null " 
 		+ ");";
 
 	public static void onCreate(SQLiteDatabase database) {

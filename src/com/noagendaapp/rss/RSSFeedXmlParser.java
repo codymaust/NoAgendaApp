@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class RSSFeedXmlParser {
 
     public List<Entry> parse(InputStream in) throws XmlPullParserException, IOException {
@@ -30,6 +29,9 @@ public class RSSFeedXmlParser {
             String title = null;
             String summary = null;
             String link = null;
+            String length = null;
+            String date = null;
+            String episodeNum = null;
 
             //
             // Loop though each parsing event of the RSS feed
@@ -49,22 +51,35 @@ public class RSSFeedXmlParser {
           			// XML attributes
                     if ("enclosure".equals(currentTag)) {
                         link = parser.getAttributeValue(null, "url");
+                        length = parser.getAttributeValue(null, "length");
                     }  
                 // Get xml text
               	} else if (parser.getEventType() == XmlPullParser.TEXT) {
               		
                     if (parser.getText() != null && !parser.getText().trim().isEmpty() && "title".equals(currentTag)) {
                         title = parser.getText();
+                        
+                        // Parse the title on - and get the episode number, the second element "NA-117-1978-11-07"
+                        try {
+                        	String[] titleArray = title.split("-");
+                        	episodeNum = titleArray[1];
+                        } catch (Exception ex) {
+                        	// TODO: Do something with this exception other than just assign the var ERR
+                        	episodeNum = "ERR";
+                        }
                     }
                     if (parser.getText() != null && !parser.getText().trim().isEmpty() && "itunes:subtitle".equals(currentTag)) {
                         summary = parser.getText();
+                    }
+                    if (parser.getText() != null && !parser.getText().trim().isEmpty() && "pubDate".equals(currentTag)) {
+                        date = parser.getText();
                     }
                 // Act when xml tags are closed    
                 } else if (parser.getEventType() == XmlPullParser.END_TAG) {
 
                 	// When the end of the item tag is reached then add a new Entry object to the entires array
                     if ("item".equals(parser.getName())) {
-                    	entries.add(new Entry(title, summary, link));
+                    	entries.add(new Entry(title, summary, link, length, date, episodeNum));
                     }
                 }
             }
@@ -81,11 +96,17 @@ public class RSSFeedXmlParser {
         public final String title;
         public final String link;
         public final String summary;
+        public final String length;
+        public final String date;
+        public final String episodeNum;
 
-        private Entry(String title, String summary, String link) {
+        private Entry(String title, String summary, String link, String length, String date, String episodeNum) {
             this.title = title;
             this.summary = summary;
             this.link = link;
+            this.length = length;
+            this.date = date;
+            this.episodeNum = episodeNum;
         }
     }
 }

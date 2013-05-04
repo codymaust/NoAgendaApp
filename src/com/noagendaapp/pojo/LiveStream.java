@@ -1,5 +1,7 @@
 package com.noagendaapp.pojo;
 
+import java.util.Date;
+
 import com.noagendaapp.R;
 
 import android.app.Activity;
@@ -13,6 +15,9 @@ public class LiveStream extends Episode {
 		subtitle = myActivity.getResources().getString(R.string.live_stream_subtitle);
 		link = "";
 		position = "0";
+		length = "0";
+		date = new Date();
+		episodeNum = "0";
 		audioUrl = myActivity.getResources().getString(R.string.live_stream_url);
 		
 		// Set GUI options

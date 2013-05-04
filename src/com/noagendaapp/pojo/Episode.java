@@ -1,6 +1,10 @@
 package com.noagendaapp.pojo;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import com.noagendaapp.audio.AudioStreamService;
 import com.noagendaapp.db.EpisodeContentProvider;
@@ -33,6 +37,10 @@ public class Episode {
 	public String subtitle;
 	public String link;
 	public String position;
+	public String length;
+	public String dateText;
+	public Date date;
+	public String episodeNum;
 	public String audioUrl;
 	protected Boolean seekBarEnabled;
 	
@@ -43,7 +51,7 @@ public class Episode {
 		id = myId;
 		
 		// Get the Episode details from the sqlite database
-		String[] projection = { EpisodeTable.COLUMN_TITLE, EpisodeTable.COLUMN_SUBTITLE, EpisodeTable.COLUMN_LINK, EpisodeTable.COLUMN_POSITION };			
+		String[] projection = { EpisodeTable.COLUMN_TITLE, EpisodeTable.COLUMN_SUBTITLE, EpisodeTable.COLUMN_LINK, EpisodeTable.COLUMN_POSITION, EpisodeTable.COLUMN_LENGTH, EpisodeTable.COLUMN_DATE, EpisodeTable.COLUMN_EPISODE_NUM };			
 		Cursor myCursor = myActivity.getContentResolver().query(EpisodeContentProvider.CONTENT_URI, projection, EpisodeTable.COLUMN_ID + " = ?", new String[] { id }, null);
 
 		// Read the details from the sqlite database
@@ -52,7 +60,23 @@ public class Episode {
 			subtitle = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_SUBTITLE));
 			link = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_LINK));
 			position = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_POSITION));
+			length = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_LENGTH));
+			dateText = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_DATE));
+			episodeNum = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_EPISODE_NUM));			
 			audioUrl = GetLocalPath();
+		}
+		
+		//
+		// Convert the dateText from the database into a Date object
+		//
+		//<pubDate>Thu, 25 Apr 2013 15:06:55 -0500</pubDate>
+		SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+		
+		try {
+			date = df.parse(dateText);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			date = new Date();
 		}
 		
 		// Set GUI options

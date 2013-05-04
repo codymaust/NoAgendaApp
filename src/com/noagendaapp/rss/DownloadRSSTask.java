@@ -87,11 +87,17 @@ public class DownloadRSSTask extends AsyncTask<String, Void, String> {
 		String title = null;
 		String subtitle = null;
 		String link = null;
+		String length = null;
+		String date = null;
+		String episodeNum = null;
 		
     	for (Entry entry : entries) {
     		title = entry.title;
     		subtitle = entry.summary;
     		link = entry.link;
+    		length = entry.length;
+    		date = entry.date;
+    		episodeNum = entry.episodeNum;
     		
     		// Only save if either summary or description
     		// is available
@@ -103,6 +109,9 @@ public class DownloadRSSTask extends AsyncTask<String, Void, String> {
     		values.put(EpisodeTable.COLUMN_TITLE, title);
     		values.put(EpisodeTable.COLUMN_SUBTITLE, subtitle);
     		values.put(EpisodeTable.COLUMN_LINK, link);
+    		values.put(EpisodeTable.COLUMN_LENGTH, length);
+    		values.put(EpisodeTable.COLUMN_DATE, date);
+    		values.put(EpisodeTable.COLUMN_EPISODE_NUM, episodeNum);
 
     		// query the database for the episode link
     		String[] projection = { EpisodeTable.COLUMN_LINK };
