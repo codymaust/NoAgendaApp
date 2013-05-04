@@ -1,6 +1,6 @@
 package com.noagendaapp.pojo;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import com.noagendaapp.R;
 
@@ -16,7 +16,7 @@ public class LiveStream extends Episode {
 		link = "";
 		position = "0";
 		length = "0";
-		date = new Date();
+		date = Calendar.getInstance();
 		episodeNum = "0";
 		audioUrl = myActivity.getResources().getString(R.string.live_stream_url);
 		

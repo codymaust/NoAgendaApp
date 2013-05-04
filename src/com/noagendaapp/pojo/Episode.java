@@ -3,8 +3,11 @@ package com.noagendaapp.pojo;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Locale;
+
+import com.noagendaapp.download.DownloadService;
+import com.noagendaapp.handler.DownloadHandler;
 
 import com.noagendaapp.audio.AudioStreamService;
 import com.noagendaapp.db.EpisodeContentProvider;
@@ -17,11 +20,13 @@ import android.app.DownloadManager;
 import android.app.DownloadManager.Request;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Message;
+import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -39,7 +44,7 @@ public class Episode {
 	public String position;
 	public String length;
 	public String dateText;
-	public Date date;
+	public Calendar date;
 	public String episodeNum;
 	public String audioUrl;
 	protected Boolean seekBarEnabled;
@@ -67,16 +72,16 @@ public class Episode {
 		}
 		
 		//
-		// Convert the dateText from the database into a Date object
+		// Convert the dateText from the database into a Calendar object
 		//
 		//<pubDate>Thu, 25 Apr 2013 15:06:55 -0500</pubDate>
-		SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+		date = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 		
 		try {
-			date = df.parse(dateText);
+			date.setTime(sdf.parse(dateText));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			date = new Date();
 		}
 		
 		// Set GUI options
@@ -124,6 +129,8 @@ public class Episode {
 		audio_SeekBar.setEnabled(seekBarEnabled);
 		audio_SeekBar.setProgress(0);
 		audio_SeekBar.setMax(100);
+		
+		DownloadEpisodeArt();
 	}
 	
 	//
@@ -293,4 +300,23 @@ public class Episode {
 		myActivity.getContentResolver().update(Uri.parse(EpisodeContentProvider.CONTENT_URI.toString() + "/" + id), values, null, null);
 
 	}
+	
+	//
+	// Download the album art for the episode
+	//
+	public void DownloadEpisodeArt() {
+		Intent intent = new Intent (myActivity, DownloadService.class);
+		//Create a new Messenger for the communication back
+		Messenger messenger = new Messenger(new DownloadHandler(myActivity));
+		intent.putExtra("MESSENGER", messenger);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+		
+		String url = String.format("http://blog.curry.com/images/%s/NA-%s-Art-SM.jpg", sdf.format(date.getTime()), episodeNum);
+		
+		intent.setData(Uri.parse(url));
+		intent.putExtra("urlpath", url);
+		myActivity.startService(intent);
+	}
+	
 }
