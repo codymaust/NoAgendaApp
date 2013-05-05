@@ -6,9 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import com.noagendaapp.download.DownloadService;
-import com.noagendaapp.handler.DownloadHandler;
-
 import com.noagendaapp.audio.AudioStreamService;
 import com.noagendaapp.db.EpisodeContentProvider;
 import com.noagendaapp.db.EpisodeTable;
@@ -20,13 +17,11 @@ import android.app.DownloadManager;
 import android.app.DownloadManager.Request;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Message;
-import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -204,7 +199,7 @@ public class Episode {
 	//
 	public void Download() {
 		String directory = Environment.getExternalStorageDirectory() + myActivity.getResources().getString(R.string.download_path);
-		String filename = Uri.parse(link).getLastPathSegment();
+		String myFilename = Uri.parse(link).getLastPathSegment();
 		
 		// if the file exist don't download it again
 		if ( ! FileExists() ) {
@@ -215,12 +210,12 @@ public class Episode {
 				myDirectory.mkdir();
 			}
 			
-            Log.d(getClass().getName(), "Downloading " + link + " to "  + directory + "/" + filename);
+            Log.d(getClass().getName(), "Downloading " + link + " to "  + directory + "/" + myFilename);
 			
             // Use DownloadManager to download episode Uri
         	DownloadManager myDownloadManager = (DownloadManager) myActivity.getSystemService(Context.DOWNLOAD_SERVICE);
         	Request myRequest = new Request(Uri.parse(link));
-        	myRequest.setDestinationUri(Uri.parse("file://" + directory + "/" + filename));
+        	myRequest.setDestinationUri(Uri.parse("file://" + directory + "/" + myFilename));
         	myDownloadManager.enqueue(myRequest);
 		}	
 	}
@@ -305,18 +300,23 @@ public class Episode {
 	// Download the album art for the episode
 	//
 	public void DownloadEpisodeArt() {
-		Intent intent = new Intent (myActivity, DownloadService.class);
-		//Create a new Messenger for the communication back
-		Messenger messenger = new Messenger(new DownloadHandler(myActivity));
-		intent.putExtra("MESSENGER", messenger);
+		String myFilename = String.format("NA-%s-Art-SM.jpg", episodeNum);
+		File myFile = new File(myActivity.getExternalCacheDir() + "/" + myFilename);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
-		
-		String url = String.format("http://blog.curry.com/images/%s/NA-%s-Art-SM.jpg", sdf.format(date.getTime()), episodeNum);
-		
-		intent.setData(Uri.parse(url));
-		intent.putExtra("urlpath", url);
-		myActivity.startService(intent);
+		// if the file exist don't download it again
+		if ( ! myFile.exists() ) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+
+			String episodeArtLink = String.format("http://blog.curry.com/images/%s/%s", sdf.format(date.getTime()), myFilename);
+
+            Log.d(getClass().getName(), "Downloading " + link + " to "  + myActivity.getExternalCacheDir() + "/" + myFilename);
+			
+            // Use DownloadManager to download episode art Uri
+        	DownloadManager myDownloadManager = (DownloadManager) myActivity.getSystemService(Context.DOWNLOAD_SERVICE);
+        	Request myRequest = new Request(Uri.parse(episodeArtLink));
+        	myRequest.setNotificationVisibility(Request.VISIBILITY_HIDDEN);
+        	myRequest.setDestinationUri(Uri.parse("file://" + myActivity.getExternalCacheDir() + "/" + myFilename));
+        	myDownloadManager.enqueue(myRequest);
+		}	
 	}
-	
 }
