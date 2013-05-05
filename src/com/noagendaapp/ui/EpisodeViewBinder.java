@@ -1,6 +1,7 @@
 package com.noagendaapp.ui;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import com.noagendaapp.R;
 
@@ -9,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.net.Uri;
 import android.os.Environment;
 import android.view.View;
@@ -44,8 +46,6 @@ public class EpisodeViewBinder implements ViewBinder {
 			if (myFile.exists()) {
 				Drawable d = Drawable.createFromPath(myFile.getAbsolutePath());
 				episode_art.setImageDrawable(d);
-				//Bitmap myBitmap = BitmapFactory.decodeFile(myFile.getAbsolutePath());
-				//episode_art.setImageBitmap(myBitmap);
 			}  else {
 				episode_art.setImageResource(R.drawable.episode_art);
 			}
@@ -70,8 +70,19 @@ public class EpisodeViewBinder implements ViewBinder {
 				action_icon.setContentDescription(myActivity.getResources().getString(R.string.episode_row_action_icon_download));	
 			}
 			
-			return true;			
+			return true;	
+	    case R.id.position:
+	    	int time = cursor.getInt(columnIndex);
+	    	
+			long cHours = TimeUnit.MILLISECONDS.toHours(time);
+			long cMinutes = TimeUnit.MILLISECONDS.toMinutes(time) - TimeUnit.HOURS.toMinutes(cHours);
+			long cSeconds = TimeUnit.MILLISECONDS.toSeconds(time) - TimeUnit.HOURS.toSeconds(cHours) - TimeUnit.MINUTES.toSeconds(cMinutes);
 
+			TextView myTextView = (TextView) view;
+			
+			myTextView.setText(String.format("%02d:%02d:%02d", cHours, cMinutes, cSeconds));
+			
+			return true;
 	    default:	    	
 	    	break;
 	    }

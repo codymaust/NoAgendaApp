@@ -51,7 +51,6 @@ public class RSSFeedXmlParser {
           			// XML attributes
                     if ("enclosure".equals(currentTag)) {
                         link = parser.getAttributeValue(null, "url");
-                        length = parser.getAttributeValue(null, "length");
                     }  
                 // Get xml text
               	} else if (parser.getEventType() == XmlPullParser.TEXT) {
@@ -73,6 +72,9 @@ public class RSSFeedXmlParser {
                     }
                     if (parser.getText() != null && !parser.getText().trim().isEmpty() && "pubDate".equals(currentTag)) {
                         date = parser.getText();
+                    }
+                    if (parser.getText() != null && !parser.getText().trim().isEmpty() && "itunes:duration".equals(currentTag)) {
+                    	length = parser.getText();
                     }
                 // Act when xml tags are closed    
                 } else if (parser.getEventType() == XmlPullParser.END_TAG) {

@@ -15,26 +15,55 @@
     </ImageView>
     
     <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_toRightOf="@+id/episode_art"       
-        android:lines="1"
-        android:text="@+id/TextView01"
-        android:textSize="20sp" >
-    </TextView>
-    
-    <TextView
         android:id="@+id/subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:layout_below="@+id/title"
         android:layout_toRightOf="@+id/episode_art"
         android:lines="1"
+        android:text="@+id/TextView01"
+        android:textSize="16sp"
+        android:textStyle="bold" >
+    </TextView>
+    
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_below="@+id/subtitle"
+        android:layout_toRightOf="@+id/episode_art"
+        android:layout_alignParentBottom="true"
+        android:lines="1"
         android:text="@+id/TextView02"
-        android:textSize="16sp">
+        android:textSize="12sp">
+    </TextView>
+    
+    <TextView
+        android:id="@+id/position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_below="@+id/subtitle"
+        android:layout_toLeftOf="@+id/length"
+        android:layout_alignParentBottom="true"
+        android:lines="1"
+        android:text="@+id/TextView03"
+        android:textSize="12sp"
+        android:layout_marginRight="8dp">
+    </TextView>
+    
+    <TextView
+        android:id="@+id/length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_below="@+id/subtitle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:lines="1"
+        android:text="@+id/TextView04"
+        android:textSize="12sp">
     </TextView>
     
     <ImageView

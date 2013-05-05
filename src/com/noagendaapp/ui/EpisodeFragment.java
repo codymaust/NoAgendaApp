@@ -155,7 +155,7 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {		
 		String orderBy = EpisodeTable.COLUMN_TITLE + " DESC";
 		
-		String[] projection = { EpisodeTable.COLUMN_ID, EpisodeTable.COLUMN_EPISODE_NUM, EpisodeTable.COLUMN_LINK, EpisodeTable.COLUMN_TITLE, EpisodeTable.COLUMN_SUBTITLE };
+		String[] projection = { EpisodeTable.COLUMN_ID, EpisodeTable.COLUMN_EPISODE_NUM, EpisodeTable.COLUMN_LINK, EpisodeTable.COLUMN_TITLE, EpisodeTable.COLUMN_SUBTITLE, EpisodeTable.COLUMN_POSITION, EpisodeTable.COLUMN_LENGTH };
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), EpisodeContentProvider.CONTENT_URI, projection, null, null, orderBy);
 		return cursorLoader;
 	}
@@ -177,9 +177,9 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 	private void fillData() {
 		// Fields from the database (projection)
 		// Must include the _id column for the adapter to work
-		String[] from = new String[] { EpisodeTable.COLUMN_EPISODE_NUM, EpisodeTable.COLUMN_LINK, EpisodeTable.COLUMN_TITLE, EpisodeTable.COLUMN_SUBTITLE };
+		String[] from = new String[] { EpisodeTable.COLUMN_EPISODE_NUM, EpisodeTable.COLUMN_LINK, EpisodeTable.COLUMN_SUBTITLE, EpisodeTable.COLUMN_TITLE, EpisodeTable.COLUMN_POSITION, EpisodeTable.COLUMN_LENGTH };
 		// Fields on the UI to which we map
-		int[] to = new int[] { R.id.episode_art, R.id.row_action_icon, R.id.title, R.id.subtitle };
+		int[] to = new int[] { R.id.episode_art, R.id.row_action_icon, R.id.subtitle, R.id.title, R.id.position, R.id.length };
 
 		getLoaderManager().initLoader(0, null, this);
 		adapter = new SimpleCursorAdapter(getActivity(), R.layout.episode_row, null, from, to, 0);
