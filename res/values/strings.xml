@@ -35,6 +35,7 @@
     <string name="episode_context_play">Play</string>
     <string name="episode_context_download">Download</string>
     <string name="episode_context_delete">Delete</string>
+    <string name="episode_context_download_art">Refresh Episode Art</string>
     
     <string name="episode_deleted">Episode has been deleted</string>
     

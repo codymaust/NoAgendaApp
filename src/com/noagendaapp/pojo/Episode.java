@@ -123,9 +123,7 @@ public class Episode {
 		SeekBar audio_SeekBar = (SeekBar) myActivity.findViewById(R.id.audio_seekbar);
 		audio_SeekBar.setEnabled(seekBarEnabled);
 		audio_SeekBar.setProgress(0);
-		audio_SeekBar.setMax(100);
-		
-		DownloadEpisodeArt();
+		audio_SeekBar.setMax(100);		
 	}
 	
 	//

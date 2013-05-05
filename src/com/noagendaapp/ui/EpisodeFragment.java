@@ -32,6 +32,7 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 	private static final int PLAY_ID = Menu.FIRST + 1;
 	private static final int DOWNLOAD_ID = Menu.FIRST + 2;
 	private static final int DELETE_ID = Menu.FIRST + 3;
+	private static final int DOWNLOAD_ART_ID = Menu.FIRST + 4;
 	
 	//
 	// Required for ListFragment (onCreate, onActivityCreated, onCreateView)
@@ -93,9 +94,11 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 		
 		if (myEpisode.FileExists()) {
 			menu.add(0, PLAY_ID, 0, R.string.episode_context_play);
-			menu.add(0, DELETE_ID, 1, R.string.episode_context_delete);		
+			menu.add(0, DELETE_ID, 1, R.string.episode_context_delete);
+			menu.add(0, DOWNLOAD_ART_ID, 2, R.string.episode_context_download_art);	
 		} else {
-			menu.add(0, DOWNLOAD_ID, 0, R.string.episode_context_download);			
+			menu.add(0, DOWNLOAD_ID, 0, R.string.episode_context_download);	
+			menu.add(0, DOWNLOAD_ART_ID, 1, R.string.episode_context_download_art);	
 		}		
 	}
 	
@@ -135,6 +138,12 @@ public class EpisodeFragment extends ListFragment implements LoaderManager.Loade
 			Toast.makeText(getActivity(), R.string.episode_deleted, Toast.LENGTH_SHORT).show();
 			
 			return true;
+		case DOWNLOAD_ART_ID:
+			Log.d(getClass().getName(), "DOWNLOAD_ART_ID");
+			
+			myEpisode.DownloadEpisodeArt();
+						
+			return true;						
 		}
 		return super.onContextItemSelected(item);
 	}
