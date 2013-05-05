@@ -3,8 +3,9 @@
 
     <item
         android:id="@+id/refresh"
-        android:showAsAction="always"
-        android:title="Refresh">
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/menu_refresh"
+        android:icon="@drawable/ic_action_reload_hl">
     </item>
 
 </menu>

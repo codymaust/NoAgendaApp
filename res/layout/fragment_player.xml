@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" 
-    android:background="#000">
+    android:orientation="horizontal"
+    style="?android:attr/actionBarStyle">
     
     <RelativeLayout
         android:id="@+id/seekbar_linearlayout"
@@ -18,7 +18,6 @@
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:layout_alignParentLeft="true"
-        	android:textColor="#eeeeee"
         	android:text="@string/default_time" />
 
     	<SeekBar
@@ -36,7 +35,6 @@
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
-        	android:textColor="#eeeeee"
         	android:text="@string/default_time" />
     
     </RelativeLayout>
@@ -57,7 +55,7 @@
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:onClick="onPlayerClick"
-			android:src="@drawable/ic_action_playback_rew_hd"
+			android:src="@drawable/ic_action_playback_rew_hl"
         	android:contentDescription="@string/rewind_imagebutton" />
     
     	<ImageButton
@@ -66,7 +64,7 @@
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:onClick="onPlayerClick"
-        	android:src="@drawable/ic_action_playback_play_hd"
+        	android:src="@drawable/ic_action_playback_play_hl"
         	android:contentDescription="@string/play_imagebutton" />
 
     	<ImageButton
@@ -75,7 +73,7 @@
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:onClick="onPlayerClick"
-        	android:src="@drawable/ic_action_playback_forw_hd"
+        	android:src="@drawable/ic_action_playback_forw_hl"
         	android:contentDescription="@string/fastforward_imagebutton" />
     	
     	<Button
@@ -84,7 +82,6 @@
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
         	android:onClick="onPlayerClick"
-        	android:text="@string/live_button" 
-        	android:textColor="@android:color/white" />
+        	android:text="@string/live_button"  />
 	</LinearLayout>
 </RelativeLayout> 

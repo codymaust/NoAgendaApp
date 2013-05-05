@@ -111,7 +111,7 @@ public class Episode {
 		
 		// Change the play button to the stop icon
 		ImageButton play_ImageButton = (ImageButton) myActivity.findViewById(R.id.play_imagebutton);
-		play_ImageButton.setImageResource(R.drawable.ic_action_playback_stop_hd);	
+		play_ImageButton.setImageResource(R.drawable.ic_action_playback_stop_hl);	
 		play_ImageButton.setContentDescription(myActivity.getResources().getString(R.string.stop_imagebutton));
 		
 		// Update the currentPostion & duration text to 00:00:00
@@ -142,7 +142,7 @@ public class Episode {
 		
 		// Change to play button to the play icon
 		ImageButton myImageButton = (ImageButton) myActivity.findViewById(R.id.play_imagebutton);
-		myImageButton.setImageResource(R.drawable.ic_action_playback_play_hd);	
+		myImageButton.setImageResource(R.drawable.ic_action_playback_play_hl);	
 		myImageButton.setContentDescription(myActivity.getResources().getString(R.string.play_imagebutton));
 	}
 	
