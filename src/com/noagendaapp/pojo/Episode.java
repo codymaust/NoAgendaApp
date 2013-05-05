@@ -300,24 +300,20 @@ public class Episode {
 	// Download the album art for the episode
 	//
 	public void DownloadEpisodeArt() {
-		String myFilename = String.format("NA-%s-Art-SM.jpg", episodeNum);
-		File myFile = new File(myActivity.getExternalCacheDir() + "/" + myFilename);
-		
-		// if the file exist don't download it again
-		if ( ! myFile.exists() ) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+		String myFilename = String.format("NA-%s-Art-SM.jpg", episodeNum);	
 
-			String episodeArtLink = String.format("http://blog.curry.com/images/%s/%s", sdf.format(date.getTime()), myFilename);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
 
-            Log.d(getClass().getName(), "Downloading " + link + " to "  + myActivity.getExternalCacheDir() + "/" + myFilename);
+		String episodeArtLink = String.format("http://blog.curry.com/images/%s/%s", sdf.format(date.getTime()), myFilename);
+
+        Log.d(getClass().getName(), "Downloading " + link + " to "  + myActivity.getExternalCacheDir() + "/" + myFilename);
 			
-            // Use DownloadManager to download episode art Uri
-        	DownloadManager myDownloadManager = (DownloadManager) myActivity.getSystemService(Context.DOWNLOAD_SERVICE);
-        	Request myRequest = new Request(Uri.parse(episodeArtLink));
-        	myRequest.setNotificationVisibility(Request.VISIBILITY_HIDDEN);
-        	myRequest.setVisibleInDownloadsUi(false);
-        	myRequest.setDestinationUri(Uri.parse("file://" + myActivity.getExternalCacheDir() + "/" + myFilename));
-        	myDownloadManager.enqueue(myRequest);
-		}	
+        // Use DownloadManager to download episode art Uri
+        DownloadManager myDownloadManager = (DownloadManager) myActivity.getSystemService(Context.DOWNLOAD_SERVICE);
+        Request myRequest = new Request(Uri.parse(episodeArtLink));
+        myRequest.setNotificationVisibility(Request.VISIBILITY_HIDDEN);
+        myRequest.setVisibleInDownloadsUi(false);
+        myRequest.setDestinationUri(Uri.parse("file://" + myActivity.getExternalCacheDir() + "/" + myFilename));
+        myDownloadManager.enqueue(myRequest);
 	}
 }
