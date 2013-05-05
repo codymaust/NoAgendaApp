@@ -1,7 +1,6 @@
 package com.noagendaapp.pojo;
 
 import java.io.File;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -38,7 +37,6 @@ public class Episode {
 	public String link;
 	public String position;
 	public String length;
-	public String dateText;
 	public Calendar date;
 	public String episodeNum;
 	public String audioUrl;
@@ -54,6 +52,8 @@ public class Episode {
 		String[] projection = { EpisodeTable.COLUMN_TITLE, EpisodeTable.COLUMN_SUBTITLE, EpisodeTable.COLUMN_LINK, EpisodeTable.COLUMN_POSITION, EpisodeTable.COLUMN_LENGTH, EpisodeTable.COLUMN_DATE, EpisodeTable.COLUMN_EPISODE_NUM };			
 		Cursor myCursor = myActivity.getContentResolver().query(EpisodeContentProvider.CONTENT_URI, projection, EpisodeTable.COLUMN_ID + " = ?", new String[] { id }, null);
 
+		String dateText = null;
+		
 		// Read the details from the sqlite database
 		if (myCursor.moveToFirst()) {
 			title = myCursor.getString(myCursor.getColumnIndex(EpisodeTable.COLUMN_TITLE));
@@ -69,16 +69,17 @@ public class Episode {
 		//
 		// Convert the dateText from the database into a Calendar object
 		//
-		//<pubDate>Thu, 25 Apr 2013 15:06:55 -0500</pubDate>
-		date = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+		// if dateText isn't null then set the date to the value of dateText
+		if ( dateText != null ) {
+			date = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 		
-		try {
-			date.setTime(sdf.parse(dateText));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			try {
+				date.setTime(sdf.parse(dateText));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+			}
 		}
-		
 		// Set GUI options
 		seekBarEnabled = true;
 	}
