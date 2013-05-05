@@ -11,17 +11,17 @@ import org.xmlpull.v1.XmlPullParserException;
 import com.noagendaapp.MainActivity;
 import com.noagendaapp.db.EpisodeContentProvider;
 import com.noagendaapp.db.EpisodeTable;
+import com.noagendaapp.pojo.Episode;
 import com.noagendaapp.rss.RSSFeedXmlParser;
 import com.noagendaapp.rss.RSSFeedXmlParser.Entry;
 import com.noagendaapp.R;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
-
-
 
 // Implementation of AsyncTask used to download RSS feed
 public class DownloadRSSTask extends AsyncTask<String, Void, String> {
@@ -122,7 +122,14 @@ public class DownloadRSSTask extends AsyncTask<String, Void, String> {
    				Log.d(getClass().getName(), "EPISODE ENTRY EXISTS");
    			} else {
    				Log.d(getClass().getName(), "ADDING NEW EPISODE ENTRY");
-   				myMainActivity.getContentResolver().insert(EpisodeContentProvider.CONTENT_URI, values);
+   				
+   				// Insert the new episode into the database and get back the Uri with the assigned _ID from the database 
+   				Uri episodeUri = myMainActivity.getContentResolver().insert(EpisodeContentProvider.CONTENT_URI, values);
+   				
+   				// Create the episode object and download the episode art
+   				Episode myEpisode = new Episode(myMainActivity,	episodeUri.getLastPathSegment());
+   				myEpisode.DownloadEpisodeArt();
+   				
    				count = count + 1;
    			}
     	}
