@@ -213,6 +213,7 @@ public class Episode {
             // Use DownloadManager to download episode Uri
         	DownloadManager myDownloadManager = (DownloadManager) myActivity.getSystemService(Context.DOWNLOAD_SERVICE);
         	Request myRequest = new Request(Uri.parse(link));
+        	myRequest.setVisibleInDownloadsUi(false);
         	myRequest.setDestinationUri(Uri.parse("file://" + directory + "/" + myFilename));
         	myDownloadManager.enqueue(myRequest);
 		}	
@@ -313,6 +314,7 @@ public class Episode {
         	DownloadManager myDownloadManager = (DownloadManager) myActivity.getSystemService(Context.DOWNLOAD_SERVICE);
         	Request myRequest = new Request(Uri.parse(episodeArtLink));
         	myRequest.setNotificationVisibility(Request.VISIBILITY_HIDDEN);
+        	myRequest.setVisibleInDownloadsUi(false);
         	myRequest.setDestinationUri(Uri.parse("file://" + myActivity.getExternalCacheDir() + "/" + myFilename));
         	myDownloadManager.enqueue(myRequest);
 		}	
