@@ -10,7 +10,7 @@ import android.util.Log;
 public class AudioIntentReceiver extends BroadcastReceiver {
 	
 	@Override
-	public void onReceive(Context ctx, Intent intent) {
+	public void onReceive(Context context, Intent intent) {
 		Log.d(getClass().getName(), "Got onRecieve");
 		if (intent.getAction().equals(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
 			Log.d(getClass().getName(), "Headphones Unplugged");
