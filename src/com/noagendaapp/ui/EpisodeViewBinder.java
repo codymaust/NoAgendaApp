@@ -37,7 +37,7 @@ public class EpisodeViewBinder implements ViewBinder {
 	    //
 	    case R.id.episode_art:   
 	    	String episodeNum = cursor.getString(columnIndex);
-	    	myFileName = String.format("NA-%s-Art-SM.jpg", episodeNum);
+	    	myFileName = String.format("NA-%s-Art-SM", episodeNum);
 	    	
     		ImageView episode_art = (ImageView) view;
     		

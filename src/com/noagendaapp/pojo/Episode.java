@@ -300,20 +300,30 @@ public class Episode {
 	// Download the album art for the episode
 	//
 	public void DownloadEpisodeArt() {
-		String myFilename = String.format("NA-%s-Art-SM.jpg", episodeNum);	
+		// Create the base filename with out the .jpg extension so when downloading the file with DownloadManger it does
+		// not get scanned by the Media Scanner
+		String myBaseFilename = String.format("NA-%s-Art-SM", episodeNum);	
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
 
-		String episodeArtLink = String.format("http://blog.curry.com/images/%s/%s", sdf.format(date.getTime()), myFilename);
+		String episodeArtLink = String.format("http://blog.curry.com/images/%s/%s.jpg", sdf.format(date.getTime()), myBaseFilename);
 
-        Log.d(getClass().getName(), "Downloading " + link + " to "  + myActivity.getExternalCacheDir() + "/" + myFilename);
+        Log.d(getClass().getName(), "Downloading " + episodeArtLink + " to "  + myActivity.getExternalCacheDir() + "/" + myBaseFilename);
 			
-        // Use DownloadManager to download episode art Uri
-        DownloadManager myDownloadManager = (DownloadManager) myActivity.getSystemService(Context.DOWNLOAD_SERVICE);
+        // Create a Request to download the Episode Art using the system DownloadManager
         Request myRequest = new Request(Uri.parse(episodeArtLink));
+        // Set the MimeType to application/octet-stream so when downloading the file with DownloadManger it does
+		// not get scanned by the Media Scanner 
+        myRequest.setMimeType("application/octet-stream");
+        // Don't show the file in the GUI (either in notifications or the download app)
         myRequest.setNotificationVisibility(Request.VISIBILITY_HIDDEN);
-        myRequest.setVisibleInDownloadsUi(false);
-        myRequest.setDestinationUri(Uri.parse("file://" + myActivity.getExternalCacheDir() + "/" + myFilename));
+        myRequest.setVisibleInDownloadsUi(false);        
+        myRequest.setDestinationUri(Uri.parse("file://" + myActivity.getExternalCacheDir() + "/" + myBaseFilename));
+
+        // Create the DownloadManager and queue the download. com.noagendaapp.download.DowloadIntentReceiver will be called 
+        // when the download is complete.
+        DownloadManager myDownloadManager = (DownloadManager) myActivity.getSystemService(Context.DOWNLOAD_SERVICE);
         myDownloadManager.enqueue(myRequest);
 	}
+
 }
