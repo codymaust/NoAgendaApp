@@ -10,26 +10,43 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-package com.noagendaapp.audio;
+package com.noagendaapp.download;
 
-import com.noagendaapp.MainActivity;
-
+import android.app.DownloadManager;
+import android.app.DownloadManager.Query;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 
-public class AudioIntentReceiver extends BroadcastReceiver {
-	
+
+public class DownloadIntentReceiver extends BroadcastReceiver {
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.d(getClass().getName(), "Got onRecieve");
-		if (intent.getAction().equals(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
-			Log.d(getClass().getName(), "Headphones Unplugged");
-	        // signal your service to stop play back 
-			if ( MainActivity.activeEpisode != null ) {
-				MainActivity.activeEpisode.Stop();
-			}
-		}
+		 String action = intent.getAction();
+		 
+         if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+        	 
+         	Log.w(getClass().getName(), "Download Complete");
+
+        	 /*
+             long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+             Query query = new Query();
+             query.setFilterById(enqueue);
+             Cursor c = myDownloadManager.query(query);
+             if (c.moveToFirst()) {
+                 int columnIndex = c.getColumnIndex(DownloadManager.COLUMN_STATUS);
+                 if (DownloadManager.STATUS_SUCCESSFUL == c.getInt(columnIndex)) {
+
+                     ImageView view = (ImageView) findViewById(R.id.download_imageview);
+                     String uriString = c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                     view.setImageURI(Uri.parse(uriString));
+                 }
+             }
+             */
+         }
 	}
 }
