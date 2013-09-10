@@ -20,64 +20,71 @@ Needs Work:
     Bug fixes
 
 Testing working with Android 4.3.
+
 Compiled with Android Developer Tools Build: v22.0.5-757759.
+
 Requires Android 4.0 or greater.
+
+Working apk version available at http://www.noagendaapp.com/
+
 
 Removed the following files due to licensing issues:
 
 ACRA (http://acra.ch/)
-libs/acra-4.4.0.jar
+
+    libs/acra-4.4.0.jar
 
 Icons (http://www.androidicons.com/)
-res/drawable-hdpi/ic_action_download_hd.png
-res/drawable-hdpi/ic_action_playback_forw_hd.png
-res/drawable-hdpi/ic_action_playback_play_hd.png
-res/drawable-hdpi/ic_action_playback_rew_hd.png
-res/drawable-hdpi/ic_action_playback_stop_hd.png
-res/drawable-hdpi/ic_action_reload_hd.png
-res/drawable-hdpi/ic_action_download_hl.png
-res/drawable-hdpi/ic_action_playback_forw_hl.png
-res/drawable-hdpi/ic_action_playback_play_hl.png
-res/drawable-hdpi/ic_action_playback_rew_hl.png
-res/drawable-hdpi/ic_action_playback_stop_hl.png
-res/drawable-hdpi/ic_action_reload_hl.png
 
-res/drawable-ldpi/ic_action_download_hd.png
-res/drawable-ldpi/ic_action_playback_forw_hd.png
-res/drawable-ldpi/ic_action_playback_play_hd.png
-res/drawable-ldpi/ic_action_playback_rew_hd.png
-res/drawable-ldpi/ic_action_playback_stop_hd.png
-res/drawable-ldpi/ic_action_reload_hd.png
-res/drawable-ldpi/ic_action_download_hl.png
-res/drawable-ldpi/ic_action_playback_forw_hl.png
-res/drawable-ldpi/ic_action_playback_play_hl.png
-res/drawable-ldpi/ic_action_playback_rew_hl.png
-res/drawable-ldpi/ic_action_playback_stop_hl.png
-res/drawable-ldpi/ic_action_reload_hl.png
+    res/drawable-hdpi/ic_action_download_hd.png
+    res/drawable-hdpi/ic_action_playback_forw_hd.png
+    res/drawable-hdpi/ic_action_playback_play_hd.png
+    res/drawable-hdpi/ic_action_playback_rew_hd.png
+    res/drawable-hdpi/ic_action_playback_stop_hd.png
+    res/drawable-hdpi/ic_action_reload_hd.png
+    res/drawable-hdpi/ic_action_download_hl.png
+    res/drawable-hdpi/ic_action_playback_forw_hl.png
+    res/drawable-hdpi/ic_action_playback_play_hl.png
+    res/drawable-hdpi/ic_action_playback_rew_hl.png
+    res/drawable-hdpi/ic_action_playback_stop_hl.png
+    res/drawable-hdpi/ic_action_reload_hl.png
 
-res/drawable-mdpi/ic_action_download_hd.png
-res/drawable-mdpi/ic_action_playback_forw_hd.png
-res/drawable-mdpi/ic_action_playback_play_hd.png
-res/drawable-mdpi/ic_action_playback_rew_hd.png
-res/drawable-mdpi/ic_action_playback_stop_hd.png
-res/drawable-mdpi/ic_action_reload_hd.png
-res/drawable-mdpi/ic_action_download_hl.png
-res/drawable-mdpi/ic_action_playback_forw_hl.png
-res/drawable-mdpi/ic_action_playback_play_hl.png
-res/drawable-mdpi/ic_action_playback_rew_hl.png
-res/drawable-mdpi/ic_action_playback_stop_hl.png
-res/drawable-mdpi/ic_action_reload_hl.png
+    res/drawable-ldpi/ic_action_download_hd.png
+    res/drawable-ldpi/ic_action_playback_forw_hd.png
+    res/drawable-ldpi/ic_action_playback_play_hd.png
+    res/drawable-ldpi/ic_action_playback_rew_hd.png
+    res/drawable-ldpi/ic_action_playback_stop_hd.png
+    res/drawable-ldpi/ic_action_reload_hd.png
+    res/drawable-ldpi/ic_action_download_hl.png
+    res/drawable-ldpi/ic_action_playback_forw_hl.png
+    res/drawable-ldpi/ic_action_playback_play_hl.png
+    res/drawable-ldpi/ic_action_playback_rew_hl.png
+    res/drawable-ldpi/ic_action_playback_stop_hl.png
+    res/drawable-ldpi/ic_action_reload_hl.png
+
+    res/drawable-mdpi/ic_action_download_hd.png
+    res/drawable-mdpi/ic_action_playback_forw_hd.png
+    res/drawable-mdpi/ic_action_playback_play_hd.png
+    res/drawable-mdpi/ic_action_playback_rew_hd.png
+    res/drawable-mdpi/ic_action_playback_stop_hd.png
+    res/drawable-mdpi/ic_action_reload_hd.png
+    res/drawable-mdpi/ic_action_download_hl.png
+    res/drawable-mdpi/ic_action_playback_forw_hl.png
+    res/drawable-mdpi/ic_action_playback_play_hl.png
+    res/drawable-mdpi/ic_action_playback_rew_hl.png
+    res/drawable-mdpi/ic_action_playback_stop_hl.png
+    res/drawable-mdpi/ic_action_reload_hl.png
 
 
-res/drawable-xhdpi/ic_action_download_hd.png
-res/drawable-xhdpi/ic_action_playback_forw_hd.png
-res/drawable-xhdpi/ic_action_playback_play_hd.png
-res/drawable-xhdpi/ic_action_playback_rew_hd.png
-res/drawable-xhdpi/ic_action_playback_stop_hd.png
-res/drawable-xhdpi/ic_action_reload_hd.png
-res/drawable-xhdpi/ic_action_download_hl.png
-res/drawable-xhdpi/ic_action_playback_forw_hl.png
-res/drawable-xhdpi/ic_action_playback_play_hl.png
-res/drawable-xhdpi/ic_action_playback_rew_hl.png
-res/drawable-xhdpi/ic_action_playback_stop_hl.png
-res/drawable-xhdpi/ic_action_reload_hl.png
+    res/drawable-xhdpi/ic_action_download_hd.png
+    res/drawable-xhdpi/ic_action_playback_forw_hd.png
+    res/drawable-xhdpi/ic_action_playback_play_hd.png
+    res/drawable-xhdpi/ic_action_playback_rew_hd.png
+    res/drawable-xhdpi/ic_action_playback_stop_hd.png
+    res/drawable-xhdpi/ic_action_reload_hd.png
+    res/drawable-xhdpi/ic_action_download_hl.png
+    res/drawable-xhdpi/ic_action_playback_forw_hl.png
+    res/drawable-xhdpi/ic_action_playback_play_hl.png
+    res/drawable-xhdpi/ic_action_playback_rew_hl.png
+    res/drawable-xhdpi/ic_action_playback_stop_hl.png
+    res/drawable-xhdpi/ic_action_reload_hl.png
